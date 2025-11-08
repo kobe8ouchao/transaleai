@@ -1,5 +1,5 @@
 // Stripe支付表单组件
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Input, message } from 'antd';
 import { useLanguage } from '../contexts/LanguageContext';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';

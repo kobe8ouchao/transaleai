@@ -7,7 +7,7 @@
  * @LastEditors: ouchao
  * @LastEditTime: 2025-03-20 15:19:52
  */
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import {  Button } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';  // 添加这行
 import HeaderComponent from '@/component/Header';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import HeaderComponent from '@/component/Header';
 import { Upload, Select, message, Progress, Space,Modal } from "antd";
 import type { UploadProps, UploadFile } from 'antd/es/upload/interface';  // 添加类型导入

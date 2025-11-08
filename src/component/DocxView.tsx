@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { renderAsync } from 'docx-preview';
 import styled from 'styled-components';
 

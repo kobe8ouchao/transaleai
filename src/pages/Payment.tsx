@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Radio, Card, Divider, Steps, message, Modal } from 'antd';
 import { AlipayCircleOutlined, CreditCardOutlined } from '@ant-design/icons';
 import HeaderComponent from '@/component/Header';
