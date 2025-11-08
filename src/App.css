@@ -1,0 +1,136 @@
+:root {
+  background-color: #fff;
+} 
+
+#root {
+  display: flex;
+  background-color: #fff;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+  -webkit-appearance: none;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  -webkit-transition: color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 135, 139, 0.8);
+}
+
+a {
+  color: #000000;  /* 改为黑色 */
+  font-weight: 500;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #4d4d4d;  /* 改为深灰色 */
+}
+
+body {
+  display: flex;
+  margin: 0;
+  min-height: 100vh;
+  min-width: 320px;
+  place-items: center;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  background-color: #1a1a1a;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 0.6em 1.2em;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  border-color: #4d4d4d;
+  color:#4d4d4d;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    background-color: #fff;
+    color: #213547;
+  }
+
+  a:hover {
+    color: #4d4d4d;
+  }
+
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ant-btn-black {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+  color: white !important;
+  outline: none !important;
+}
+
+.ant-btn-black:hover,
+.ant-btn-black:active,
+.ant-btn-black:focus {
+  background-color: #333333 !important;
+  border-color: #333333 !important;
+  color: white !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.ant-btn-outline-black {
+  background-color: transparent !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  outline: none !important;
+}
+
+.ant-btn-outline-black:hover,
+.ant-btn-outline-black:active,
+.ant-btn-outline-black:focus {
+  background-color: #f5f5f5 !important;
+  border-color: #333333 !important;
+  color: #333333 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
