@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import SparkMD5 from 'spark-md5';
 import { useLanguage } from '../contexts/LanguageContext';
+import { getApiUrl } from '@/config/api';
 const languagesArr = [
   {
     value: 'Chinese',
@@ -119,7 +120,7 @@ function AddFile() {
   const props: UploadProps = {
     name: 'file',
     multiple: true,
-    action: '/api/upload',
+    action: getApiUrl('/upload'),
     data: { userId, targetLang },
     beforeUpload: async (file: File) => {
       // 获取用户信息并检查 VIP 和 tokens
@@ -187,7 +188,7 @@ function AddFile() {
       formData.append('originalName', file.name);
       formData.append('md5Name', newFileName);
       
-      fetch('/api/upload', {
+      fetch(getApiUrl('/upload'), {
         method: 'POST',
         body: formData,
       })
@@ -267,7 +268,7 @@ function AddFile() {
       formData.append('originalName', pendingFile.name);
       formData.append('md5Name', newFileName);
       // You can use any AJAX library you like
-      fetch('/api/upload', {
+      fetch(getApiUrl('/upload'), {
         method: 'POST',
         body: formData,
       })

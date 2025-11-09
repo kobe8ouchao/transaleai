@@ -8,6 +8,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { useSearchParams } from 'react-router-dom';
 import { Elements } from '@stripe/react-stripe-js';
 import StripeCheckoutForm from '@/component/StripeForm';
+import { getApiUrl } from '@/config/api';
 import { loadStripe } from '@stripe/stripe-js';
 
 const stripePromise = loadStripe('pk_test_51OKFXUDSf9nvOOkrhNyAbJi6xCQmzBjrUj8JYPRMp6dZsSMc2T2xlH3L3kAmjjzycApHYkxljGjskRHB8zK3hymm00BVwcbouz');
@@ -47,7 +48,7 @@ const Payment = () => {
       if (paymentMethod === 'alipay') {
         try {
           // 调用后端创建支付宝订单接口
-          const response = await fetch('/api/create-alipay-order', {
+          const response = await fetch(getApiUrl('/create-alipay-order'), {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -74,7 +75,7 @@ const Payment = () => {
               onOk: async () => {
                 // 调用订单查询接口
                 try {
-                  const checkResponse = await fetch(`/api/check-payment-status?orderId=${data.orderId}`);
+                  const checkResponse = await fetch(getApiUrl(`/check-payment-status?orderId=${data.orderId}`));
                   const checkResult = await checkResponse.json();
                   
                   if (checkResult.paid) {
@@ -110,7 +111,7 @@ const Payment = () => {
     // 添加获取用户信息的方法
     const fetchUserInfo = async () => {
       try {
-        const response = await fetch('/api/user/info', {
+        const response = await fetch(getApiUrl('/user/info'), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button, Input, message } from 'antd';
 import { useLanguage } from '../contexts/LanguageContext';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { getApiUrl } from '@/config/api';
 
 // 加载Stripe
 const StripeCheckoutForm = ({ onPaymentSuccess, onPaymentError, amount }) => {
@@ -42,7 +43,7 @@ const StripeCheckoutForm = ({ onPaymentSuccess, onPaymentError, amount }) => {
         if (parseFloat(amount.replace(/[^0-9.]/g, '')) * 100 == 999) {
             order_type = 'consumption'
         }
-        const response = await fetch('/api/create-stripe-payment-intent', {
+        const response = await fetch(getApiUrl('/create-stripe-payment-intent'), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

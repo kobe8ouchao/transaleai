@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { renderAsync } from 'docx-preview';
 import styled from 'styled-components';
+import { getApiUrl } from '@/config/api';
 
 // 使用 styled-components 创建一个自定义的容器
 const DocContainer = styled.div`
@@ -36,7 +37,7 @@ const DocxViewer = ({ url }) => {
   useEffect(() => {
     const loadDocx = async () => {
       try {
-        const response = await fetch(url);
+        const response = await fetch(getApiUrl(url));
         const blob = await response.blob();
         await renderAsync(blob, containerRef.current, null, {
           className: 'docx',

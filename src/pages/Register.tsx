@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useLanguage } from '../contexts/LanguageContext';
 import { supportedLanguages } from '@/locales';
+import { getApiUrl } from '@/config/api';
 
 const Register = () => {
   const { t } = useLanguage();
@@ -57,7 +58,7 @@ const languageMenu = (
 
     setLoading(true);
     try {
-      const response = await axios.post('/api/register', {
+      const response = await axios.post(getApiUrl('/register'), {
         username: form.username,
         email: form.email,
         password: form.password,

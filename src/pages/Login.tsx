@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useLanguage } from '../contexts/LanguageContext';
 import { supportedLanguages } from '@/locales';
+import { getApiUrl } from '@/config/api';
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ const Login = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post('/api/login', {
+      const response = await axios.post(getApiUrl('/login'), {
         email: form.email,
         password: form.password,
       });
@@ -54,7 +55,7 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/auth/google');
+      const response = await fetch(getApiUrl('/auth/google'));
       const data = await response.json();
       
       // 创建消息监听器，在打开窗口前设置
@@ -127,7 +128,7 @@ const Login = () => {
   const handleWechatLogin = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('/api/auth/wechat/login');
+      const response = await axios.get(getApiUrl('/auth/wechat/login'));
       if (response.data.auth_url) {
         // 创建消息监听器，在打开窗口前设置
         const wechatAuthListener = (event) => {

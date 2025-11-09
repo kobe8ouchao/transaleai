@@ -17,6 +17,7 @@ import {
   FilePptOutlined,
   FileMarkdownOutlined,
 } from "@ant-design/icons";
+import { getApiUrl } from '@/config/api';
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 import {useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
@@ -526,7 +527,7 @@ function FileReader() {
     try {
       const userId = JSON.parse(localStorage.getItem('user') || '{}').id;
       console.log(localStorage.getItem('user'))
-      const response = await fetch('/api/user/files', {
+      const response = await fetch(getApiUrl('/user/files'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -590,7 +591,7 @@ function FileReader() {
       }
     } 
     setLoading(true);
-    fetch(`/api/files/${userId}/${filename}`)
+    fetch(getApiUrl(`/files/${userId}/${filename}`))
       .then(response => {
         console.log(response)
         // 在加载新文件前先清理旧的资源
@@ -672,7 +673,7 @@ function FileReader() {
   useEffect(() => {
     if (progress !== -2 && progress < 100 && progress >= 0 ) {
       const interval = setInterval(() => {
-        fetch(`/api/progress/${filename}`)
+        fetch(getApiUrl(`/progress/${filename}`))
           .then(response => response.json())
           .then(data => {
             setProgress(data.progress);
@@ -706,7 +707,7 @@ function FileReader() {
       return;
     }
     const userId = JSON.parse(localStorage.getItem('user') || '{}').id;
-    fetch('/api/translate', {
+    fetch(getApiUrl('/translate'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ filename, lang ,userId})
@@ -732,7 +733,7 @@ function FileReader() {
   // 添加更新用户 tokens 的函数
   const updateUserTokens = async () => {
     try {
-      const response = await fetch('/api/user/info', {
+      const response = await fetch(getApiUrl('/user/info'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
