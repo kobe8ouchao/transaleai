@@ -450,7 +450,7 @@ const TxtViewer = ({ fileUrl, loading }) => {
 };
 
 // 在 FileReader 组件中添加一个获取图标的函数
-function FileReader() {
+function  FileReader() {
   const [sourceFileUrl, setSourceFileUrl] = useState(null);
   const [translatedFileUrl, setTranslatedFileUrl] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -580,26 +580,24 @@ function FileReader() {
 
   const fetchFileContent = async (_lang: string,filename: string,source:string,userId:string) => {
     if (source === "1") {
-      if (sourceFileUrl) {
+      if (sourceFileUrl && sourceFileUrl.startsWith('blob:')) {
         URL.revokeObjectURL(sourceFileUrl);
-        setSourceFileUrl(null);
       }
+      setSourceFileUrl(null);
     } else {
-      if (translatedFileUrl) {
+      if (translatedFileUrl && translatedFileUrl.startsWith('blob:')) {
         URL.revokeObjectURL(translatedFileUrl);
-        setTranslatedFileUrl(null);
       }
+      setTranslatedFileUrl(null);
     } 
     setLoading(true);
-    fetch(getApiUrl(`/files/${userId}/${filename}`))
+    const fileEndpoint = getApiUrl(`/files/${userId}/${filename}`);
+    fetch(fileEndpoint)
       .then(response => {
-        console.log(response)
-        // 在加载新文件前先清理旧的资源
-        
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const contentType = response.headers.get('content-type');
+        const contentType = response.headers.get('content-type') || '';
         const fileExtension = filename.split('.').pop()?.toLowerCase();
         setFileType(null);
         if (contentType.includes('pdf')) {
@@ -613,7 +611,6 @@ function FileReader() {
         } else if (contentType.includes('text/markdown') || fileExtension === 'md' || fileExtension === 'markdown') {
           setFileType('markdown');
         } else {
-          // 尝试根据文件扩展名判断
           if (fileExtension === 'md' || fileExtension === 'markdown') {
             setFileType('markdown');
           } else if (fileExtension === 'json') {
@@ -622,17 +619,11 @@ function FileReader() {
             throw new Error('Unsupported file type');
           }
         }
-        return response.blob();
-      })
-      .then(blob => {
-        const url = URL.createObjectURL(blob);
-        if(source == "1") {
-          console.log("source",url)
-          setSourceFileUrl(url);
-        }else{
-          console.log("translate",url)
-          setTranslatedFileUrl(url);
-        }    
+        if (source === "1") {
+          setSourceFileUrl(fileEndpoint);
+        } else {
+          setTranslatedFileUrl(fileEndpoint);
+        }
         setLoading(false);
       })
       .catch(e => {
@@ -640,8 +631,6 @@ function FileReader() {
         message.error(t("fileReader.errors.fetchListFailed"));
         setLoading(false);
       });
-      
-    // handleTranslate();
   };
  
   // 在组件加载时获取文件列表
