@@ -357,7 +357,7 @@ const PDFViewer = ({ fileUrl, loading }) => {
         </div>
       ) : (
         <Document
-          key={key}
+          key={`${fileUrl}-${key}`}
           file={fileUrl}
           onLoadSuccess={onDocumentLoadSuccess}
           onLoadError={onDocumentLoadError}
@@ -591,7 +591,8 @@ function  FileReader() {
       setTranslatedFileUrl(null);
     } 
     setLoading(true);
-    const fileEndpoint = getApiUrl(`/files/${userId}/${filename}`);
+    const baseEndpoint = getApiUrl(`/files/${userId}/${filename}`);
+    const fileEndpoint = `${baseEndpoint}${baseEndpoint.includes('?') ? '&' : '?'}t=${Date.now()}`;
     fetch(fileEndpoint)
       .then(response => {
         if (!response.ok) {
@@ -960,7 +961,7 @@ function  FileReader() {
                   </div>
                   <div className={`h-[calc(100%-32px)] ${fileType !== 'word' ? 'overflow-auto' : ''}`}>
                     {sourceFileUrl ? (
-                      <div key={`source-${fileType}`}>
+                      <div key={`source-${fileType}-${sourceFileUrl || ''}`}>
                       <FileViewerComponent fileUrl={sourceFileUrl} loading={loading} />
                       </div>
                     ) : (
@@ -981,7 +982,7 @@ function  FileReader() {
                   </div>
                   <div className={`h-[calc(100%-32px)] ${fileType !== 'word' ? 'overflow-auto' : ''}`}>
                     {translatedFileUrl && (progress === 100 || progress === -1) ? (
-                      <div key={`translated-${fileType}`}>
+                      <div key={`translated-${fileType}-${translatedFileUrl || ''}`}>
                       <FileViewerComponent fileUrl={translatedFileUrl} loading={loading} />
                       </div>
                     ) : (
