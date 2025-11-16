@@ -25,7 +25,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-white">
       <HeaderComponent />
-      <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
+      <section className="relative pt-40 pb-28 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
         <div className="absolute inset-0 z-0">
           <img
             src="https://public.readdy.ai/ai/img_res/2bd19cd2824e26f45e35f15851e683ed.jpg"
@@ -33,16 +33,16 @@ const Home = () => {
             alt="background"
           />
         </div>
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
-              <h1 className="text-5xl font-bold text-gray-900 mb-6">
+              <h1 className="text-5xl leading-tight font-bold text-gray-900 mb-8">
               {t('hero.title')}
               </h1>
-              <p className="text-xl text-gray-600 mb-8">
+              <p className="text-xl leading-relaxed text-gray-600 mb-10 max-w-2xl">
               {t('hero.subtitle')}
               </p>
-              <div className="flex space-x-4">
+              <div className="flex gap-4">
                 <Button
                   style={{ backgroundColor: "#000000", borderColor: "#000000" }}
                   size="large"
@@ -66,25 +66,24 @@ const Home = () => {
             <div className="relative">
               <img
                 src="https://public.readdy.ai/ai/img_res/af6bfeddc19ee5a8c46a269d0151e8b6.jpg"
-                className="w-full rounded-lg shadow-2xl"
+                className="w-full rounded-xl shadow-xl"
                 alt="Translation Interface"
               />
             </div>
           </div>
         </div>
       </section>
-       {/* Features Section */}
-       <section id="features" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+       <section id="features" className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
               {t('features.title')}
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-lg text-gray-600">
               {t('features.subtitle')}
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-10">
             {[
               {
                 icon: "fas fa-sync-alt",
@@ -123,10 +122,10 @@ const Home = () => {
             ].map((feature, index) => (
               <div
                 key={index}
-                className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+                className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow"
               >
                 <i
-                  className={`${feature.icon} text-3xl text-gray-900 mb-4`}
+                  className={`${feature.icon} text-3xl text-gray-900 mb-5`}
                 ></i>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   {feature.title}
@@ -137,18 +136,17 @@ const Home = () => {
           </div>
         </div>
       </section>
-      {/* Solutions Section */}
-      <section id="solutions" className="py-20">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+      <section id="solutions" className="py-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
               {t('solutions.title')}
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-lg text-gray-600">
               {t('solutions.subtitle')}
             </p>
           </div>
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-4 gap-8">
             {[
               {
                 image: "https://public.readdy.ai/ai/img_res/e50d19abbcb377ac4ea0f1a96e86e5bc.jpg",
@@ -172,7 +170,7 @@ const Home = () => {
               },
             ].map((solution, index) => (
               <div key={index} className="group cursor-pointer">
-                <div className="relative h-48 mb-4 overflow-hidden rounded-lg">
+                <div className="relative h-56 mb-5 overflow-hidden rounded-xl">
                   <img
                     src={solution.image}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -188,21 +186,20 @@ const Home = () => {
           </div>
         </div>
       </section>
-       {/* Pricing Section */}
        <section
         id="pricing"
-        className="py-20 bg-gradient-to-b from-white to-gray-50"
+        className="py-24 bg-gradient-to-b from-white to-gray-50"
       >
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
               {t('pricing.title')}
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-lg text-gray-600">
               {t('pricing.subtitle')}
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
             {[
               {
                 name: t('pricing.basic.name'),
@@ -238,7 +235,7 @@ const Home = () => {
              
               <div
                 key={index}
-                className={`bg-white p-8 rounded-lg transition-shadow ${plan.highlight ? "border-2 border-black" : "border border-gray-200"}`}
+                className={`bg-white p-10 rounded-xl transition-shadow ${plan.highlight ? "border-2 border-black" : "border border-gray-200"}`}
               >
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">
                   {plan.name}
@@ -251,7 +248,7 @@ const Home = () => {
                     <span className="text-lg text-gray-500">/mo</span>
                   )}
                 </div>
-                <ul className="space-y-4 mb-8">
+                <ul className="space-y-4 mb-10">
                   {plan.features.map((feature, fIndex) => (
                     <li key={fIndex} className="flex items-center">
                       <CheckOutlined className="fas fa-check text-green-500 mr-2"/>
