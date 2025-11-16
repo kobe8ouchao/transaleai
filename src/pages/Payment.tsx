@@ -118,26 +118,50 @@ const Payment = () => {
           },
           body: JSON.stringify({ userId })
         });
-        
         if (!response.ok) {
-          
           throw new Error('获取用户信息失败');
         }
         const userData = await response.json();
         localStorage.setItem('user', JSON.stringify(userData.data));
+        const updateEvent = new CustomEvent('updateUserInfo', { 
+          detail: { tokens: userData.data.tokens }
+        });
+        window.dispatchEvent(updateEvent);
+        return userData.data;
       } catch (error) {
         console.error('获取用户信息失败',error);
         message.error(t('payment.fetchUserInfoFailed'));
+        return null;
       }
+    };
+
+    const pollUserInfoUntilUpdated = async (initialTokens: number, initialVip: number, maxAttempts = 15, intervalMs = 2000) => {
+      for (let i = 0; i < maxAttempts; i++) {
+        const data = await fetchUserInfo();
+        if (data) {
+          const tokensChanged = typeof data.tokens === 'number' && data.tokens > (initialTokens || 0);
+          const vipChanged = typeof data.vip === 'number' && data.vip !== (initialVip || 0);
+          if (tokensChanged || vipChanged) {
+            return true;
+          }
+        }
+        await new Promise(res => setTimeout(res, intervalMs));
+      }
+      return false;
     };
     
     // 修改支付成功的处理方法
     const handleStripePaymentSuccess = async (paymentIntent) => {
       setCurrentStep(2);
-      console.log(paymentIntent);
-      await fetchUserInfo();
-      message.success(t('payment.success'));
-       // 获取最新的用户信息
+      const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+      const initialTokens = currentUser.tokens || 0;
+      const initialVip = currentUser.vip || 0;
+      const updated = await pollUserInfoUntilUpdated(initialTokens, initialVip);
+      if (updated) {
+        message.success(t('payment.success'));
+      } else {
+        message.warning(t('payment.pendingStatus'));
+      }
     };
   
     const handleStripePaymentError = (errorMessage) => {

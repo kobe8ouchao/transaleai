@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import HeaderComponent from '@/component/Header';
-import { Upload, Select, message, Progress, Space,Modal } from "antd";
+import { Upload, Select, message, Progress, Space, Modal, Spin } from "antd";
 import type { UploadProps, UploadFile } from 'antd/es/upload/interface';  // 添加类型导入
 import FooterComponet from '@/component/Footer';
 import {
@@ -91,6 +91,7 @@ function AddFile() {
   const [targetLang, setTargetLang] = useState("");  // 设置默认值为中文
   const [pendingFile, setPendingFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
   const storedUser = localStorage.getItem('user');
   const { t } = useLanguage();
   if (!storedUser) {
@@ -188,17 +189,24 @@ function AddFile() {
       formData.append('originalName', file.name);
       formData.append('md5Name', newFileName);
       
+      setIsUploading(true);
       fetch(getApiUrl('/upload'), {
         method: 'POST',
         body: formData,
       })
-        .then(res => res.json())
-        .then(() => {
-          message.success('upload successfully.');
+        .then(async res => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          const data = await res.json();
+          message.success(t('addFile.success'));
           window.location.href = `/see?filename=${newFileName}&lang=${targetLang}`;
         })
-        .catch(error => {
-          message.error(`upload failed: ${error.message}`);
+        .catch(() => {
+          message.error(t('addFile.errors.uploadFailed'));
+        })
+        .finally(() => {
+          setIsUploading(false);
         });
 
       return false;
@@ -268,27 +276,25 @@ function AddFile() {
       formData.append('originalName', pendingFile.name);
       formData.append('md5Name', newFileName);
       // You can use any AJAX library you like
+      setIsUploading(true);
       fetch(getApiUrl('/upload'), {
         method: 'POST',
         body: formData,
       })
-        .then(res => {
+        .then(async res => {
           if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);
           }
-          return res.json();
-        })
-        .then(() => {
-          console.log(pendingFile);
-          message.success(t('adddFile.success'));
+          const data = await res.json();
+          message.success(t('addFile.success'));
           window.location.href = `/see?filename=${newFileName}&lang=${value}`;
         })
-        .catch(error => {
-          console.error('Error:', error);
-          message.error(`upload failed: ${error.message}`);
+        .catch(() => {
+          message.error(t('addFile.errors.uploadFailed'));
         })
         .finally(() => {
           setPendingFile(null);
+          setIsUploading(false);
         }); 
     }
     setTargetLang(value);
@@ -385,6 +391,11 @@ function AddFile() {
           </div>
         </div>
       </main>
+      <Modal open={isUploading} footer={null} closable={false} centered>
+        <div className="flex items-center justify-center py-6">
+          <Spin tip="正在上传..." />
+        </div>
+      </Modal>
       <FooterComponet />
     </div>
       
