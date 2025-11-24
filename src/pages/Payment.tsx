@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Button, Radio, Card, Divider, Steps, message, Modal, Spin } from 'antd';
-import { QRCodeCanvas } from 'qrcode.react';
 import { AlipayCircleOutlined, CreditCardOutlined } from '@ant-design/icons';
 import HeaderComponent from '@/component/Header';
 import FooterComponet from '@/component/Footer';
