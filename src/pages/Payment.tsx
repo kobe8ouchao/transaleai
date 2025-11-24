@@ -33,7 +33,6 @@ const Payment = () => {
   const price = searchParams.get('price') || '';
   const period = searchParams.get('period') || '';
   const userId = JSON.parse(localStorage.getItem('user') || '{}').id;
-  const [qrCodeUrl, setQrCodeUrl] = useState('');
   const [showQrModal, setShowQrModal] = useState(false);
   const [orderId, setOrderId] = useState('');
   const [polling, setPolling] = useState(false);
@@ -147,34 +146,7 @@ const Payment = () => {
     }
   };
 
-  const startPolling = (orderId: string) => {
-    setPolling(true);
-    const intervalId = setInterval(async () => {
-      try {
-        const response = await fetch(getApiUrl(`/check-alipay-status?orderId=${orderId}`));
-        const data = await response.json();
 
-        if (data.paid) {
-          clearInterval(intervalId);
-          setPolling(false);
-          setShowQrModal(false);
-          setCurrentStep(2);
-
-          // 更新用户信息
-          await fetchUserInfo();
-          message.success(t('payment.success'));
-        }
-      } catch (error) {
-        console.error('查询支付状态失败:', error);
-      }
-    }, 2000); // 每2秒查询一次
-
-    // 30分钟后停止轮询
-    setTimeout(() => {
-      clearInterval(intervalId);
-      setPolling(false);
-    }, 30 * 60 * 1000);
-  };
   // 添加获取用户信息的方法
   const fetchUserInfo = async () => {
     try {
@@ -218,7 +190,7 @@ const Payment = () => {
   };
 
   // 修改支付成功的处理方法
-  const handleStripePaymentSuccess = async (paymentIntent) => {
+  const handleStripePaymentSuccess = async () => {
     setCurrentStep(2);
     const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
     const initialTokens = currentUser.tokens || 0;
@@ -415,15 +387,7 @@ const Payment = () => {
             <div className="text-gray-500 text-sm">{orderInfo.planName} {orderInfo.period}</div>
           </div>
 
-          <div className="border p-4 rounded-lg shadow-sm mb-6 bg-white">
-            {qrCodeUrl ? (
-              <QRCodeCanvas value={qrCodeUrl} size={200} />
-            ) : (
-              <div className="w-[200px] h-[200px] flex items-center justify-center bg-gray-50">
-                <Spin />
-              </div>
-            )}
-          </div>
+
 
           <div className="mb-6 text-center">
             <p className="text-gray-600 mb-1 font-medium">{t('payment.scanQrCode')}</p>

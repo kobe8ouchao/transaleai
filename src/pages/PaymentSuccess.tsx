@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Result, Button, message } from 'antd';
+import { Result, Button } from 'antd';
 import { CheckCircleOutlined } from '@ant-design/icons';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';

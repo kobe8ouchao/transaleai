@@ -199,7 +199,6 @@ function AddFile() {
           if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);
           }
-          const data = await res.json();
           message.success(t('addFile.success'));
           window.location.href = `/see?filename=${newFileName}&lang=${targetLang}`;
         })
@@ -293,7 +292,6 @@ function AddFile() {
           if (!res.ok) {
             throw new Error(`HTTP error! status: ${res.status}`);
           }
-          const data = await res.json();
           message.success(t('addFile.success'));
           window.location.href = `/see?filename=${newFileName}&lang=${value}`;
         })
