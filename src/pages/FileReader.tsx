@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import {  Spin, message,  Button ,Flex,Tooltip,Progress, Modal} from 'antd';
+import { Spin, message, Button, Flex, Tooltip, Progress, Modal } from 'antd';
 import { useLocation } from 'react-router-dom';
 import HeaderComponent from '@/component/Header';
 import { Document, Page, pdfjs } from 'react-pdf';
@@ -19,7 +19,7 @@ import {
 } from "@ant-design/icons";
 import { getApiUrl } from '@/config/api';
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -82,9 +82,9 @@ const MarkdownViewer = ({ fileUrl, loading }) => {
       ) : error ? (
         <div className="flex flex-col items-center justify-center w-full h-full">
           <p className="text-red-500 mb-4">Markdown {t("fileReader.errors.fetchFileFailed")}</p>
-          <Button 
+          <Button
             onClick={() => window.location.reload()}
-            style={{ 
+            style={{
               backgroundColor: '#ffffff',
               borderColor: '#000000',
               color: '#000000'
@@ -97,7 +97,7 @@ const MarkdownViewer = ({ fileUrl, loading }) => {
       ) : (
         <div className="bg-white rounded-lg border border-gray-200 h-full overflow-y-auto">
           <div className="flex justify-end p-2 border-b border-gray-100">
-            <Button 
+            <Button
               type="text"
               onClick={() => setShowSource(!showSource)}
               className="text-gray-600 hover:text-gray-900"
@@ -105,14 +105,14 @@ const MarkdownViewer = ({ fileUrl, loading }) => {
               {showSource ? t('fileReader.mdsourceView') : t('fileReader.mdhtmlView')}
             </Button>
           </div>
-          
+
           {showSource ? (
             <div className="p-6 prose max-w-none w-full overflow-x-auto">
               {/* <div className="w-full overflow-x-auto" style={{ maxWidth: '100%' }}> */}
               <div className="bg-white p-4 rounded-lg border border-gray-200 h-full overflow-y-auto whitespace-pre-wrap">
-          {content}
-        </div>
-                {/* <SyntaxHighlighter 
+                {content}
+              </div>
+              {/* <SyntaxHighlighter 
                   language="markdown" 
                   style={tomorrow}
                   customStyle={{ 
@@ -130,67 +130,67 @@ const MarkdownViewer = ({ fileUrl, loading }) => {
               {/* </div> */}
             </div>
           ) : (
-            
+
             <div className="p-6 prose max-w-none w-full overflow-x-auto">
-                  <ReactMarkdown 
-                    remarkPlugins={[remarkGfm]}
-                    components={{
-                      code: ({node, className, children, ...props}) => {
-                        console.log(node)
-                        const match = /language-(\w+)/.exec(className || '');
-                        return match ? (
-                          <div className="w-full overflow-x-auto">
-                            <SyntaxHighlighter
-                              style={tomorrow}
-                              language={match[1]}
-                              PreTag="div"
-                              customStyle={{ width: '100%' }}
-                              wrapLines={false}
-                              wrapLongLines={false}
-                              {...props}
-                            >
-                              {String(children).replace(/\n$/, '')}
-                            </SyntaxHighlighter>
-                          </div>
-                        ) : (
-                          <code className={className} {...props}>
-                            {children}
-                          </code>
-                        );
-                      },
-                      h1: ({...props}) => <h1 style={{fontSize: '2em', fontWeight: 'bold', marginTop: '0.67em', marginBottom: '0.67em'}} {...props} />,
-                      h2: ({ ...props}) => <h2 style={{fontSize: '1.5em', fontWeight: 'bold', marginTop: '0.83em', marginBottom: '0.83em'}} {...props} />,
-                      h3: ({ ...props}) => <h3 style={{fontSize: '1.17em', fontWeight: 'bold', marginTop: '1em', marginBottom: '1em'}} {...props} />,
-                      h4: ({ ...props}) => <h4 style={{fontSize: '1em', fontWeight: 'bold', marginTop: '1.33em', marginBottom: '1.33em'}} {...props} />,
-                      h5: ({ ...props}) => <h5 style={{fontSize: '0.83em', fontWeight: 'bold', marginTop: '1.67em', marginBottom: '1.67em'}} {...props} />,
-                      h6: ({ ...props}) => <h6 style={{fontSize: '0.67em', fontWeight: 'bold', marginTop: '2.33em', marginBottom: '2.33em'}} {...props} />,
-                      p: ({...props}) => <p style={{marginTop: '1em', marginBottom: '1em'}} {...props} />,
-                      ul: ({ ...props}) => <ul style={{paddingLeft: '2em', marginTop: '1em', marginBottom: '1em', listStyleType: 'disc'}} {...props} />,
-                      ol: ({ ...props}) => <ol style={{paddingLeft: '2em', marginTop: '1em', marginBottom: '1em', listStyleType: 'decimal'}} {...props} />,
-                      li: ({ ...props}) => <li style={{display: 'list-item'}} {...props} />,
-                      blockquote: ({ ...props}) => <blockquote style={{borderLeft: '4px solid #ddd', paddingLeft: '1em', marginLeft: '0', marginRight: '0'}} {...props} />,
-                      table: ({ ...props}) => (
-                        <div className="w-full overflow-x-auto">
-                          <table style={{borderCollapse: 'collapse', width: '100%'}} {...props} />
-                        </div>
-                      ),
-                      th: ({...props}) => <th style={{border: '1px solid #ddd', padding: '0.5em', textAlign: 'left', fontWeight: 'bold'}} {...props} />,
-                      td: ({...props}) => <td style={{border: '1px solid #ddd', padding: '0.5em', textAlign: 'left'}} {...props} />,
-                      a: ({...props}) => <a style={{color: '#0366d6', textDecoration: 'none'}} {...props} />,
-                      img: ({ ...props}) => <img style={{maxWidth: '100%'}} {...props} />,
-                      // 添加对 emoji 的支持
-                      em: ({ ...props}) => <em style={{fontStyle: 'italic'}} {...props} />,
-                      strong: ({ ...props}) => <strong style={{fontWeight: 'bold'}} {...props} />,
-                      // 确保 emoji 能够正确显示
-                      text: ({...props}) => {
-                        // 处理文本节点，确保 emoji 能够正确渲染
-                        return <span>{props.children}</span>;
-                      }
-                    }}
-                  >
-                    {content}
-                  </ReactMarkdown>
-                </div>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  code: ({ node, className, children, ...props }) => {
+                    console.log(node)
+                    const match = /language-(\w+)/.exec(className || '');
+                    return match ? (
+                      <div className="w-full overflow-x-auto">
+                        <SyntaxHighlighter
+                          style={tomorrow}
+                          language={match[1]}
+                          PreTag="div"
+                          customStyle={{ width: '100%' }}
+                          wrapLines={false}
+                          wrapLongLines={false}
+                          {...props}
+                        >
+                          {String(children).replace(/\n$/, '')}
+                        </SyntaxHighlighter>
+                      </div>
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                  h1: ({ ...props }) => <h1 style={{ fontSize: '2em', fontWeight: 'bold', marginTop: '0.67em', marginBottom: '0.67em' }} {...props} />,
+                  h2: ({ ...props }) => <h2 style={{ fontSize: '1.5em', fontWeight: 'bold', marginTop: '0.83em', marginBottom: '0.83em' }} {...props} />,
+                  h3: ({ ...props }) => <h3 style={{ fontSize: '1.17em', fontWeight: 'bold', marginTop: '1em', marginBottom: '1em' }} {...props} />,
+                  h4: ({ ...props }) => <h4 style={{ fontSize: '1em', fontWeight: 'bold', marginTop: '1.33em', marginBottom: '1.33em' }} {...props} />,
+                  h5: ({ ...props }) => <h5 style={{ fontSize: '0.83em', fontWeight: 'bold', marginTop: '1.67em', marginBottom: '1.67em' }} {...props} />,
+                  h6: ({ ...props }) => <h6 style={{ fontSize: '0.67em', fontWeight: 'bold', marginTop: '2.33em', marginBottom: '2.33em' }} {...props} />,
+                  p: ({ ...props }) => <p style={{ marginTop: '1em', marginBottom: '1em' }} {...props} />,
+                  ul: ({ ...props }) => <ul style={{ paddingLeft: '2em', marginTop: '1em', marginBottom: '1em', listStyleType: 'disc' }} {...props} />,
+                  ol: ({ ...props }) => <ol style={{ paddingLeft: '2em', marginTop: '1em', marginBottom: '1em', listStyleType: 'decimal' }} {...props} />,
+                  li: ({ ...props }) => <li style={{ display: 'list-item' }} {...props} />,
+                  blockquote: ({ ...props }) => <blockquote style={{ borderLeft: '4px solid #ddd', paddingLeft: '1em', marginLeft: '0', marginRight: '0' }} {...props} />,
+                  table: ({ ...props }) => (
+                    <div className="w-full overflow-x-auto">
+                      <table style={{ borderCollapse: 'collapse', width: '100%' }} {...props} />
+                    </div>
+                  ),
+                  th: ({ ...props }) => <th style={{ border: '1px solid #ddd', padding: '0.5em', textAlign: 'left', fontWeight: 'bold' }} {...props} />,
+                  td: ({ ...props }) => <td style={{ border: '1px solid #ddd', padding: '0.5em', textAlign: 'left' }} {...props} />,
+                  a: ({ ...props }) => <a style={{ color: '#0366d6', textDecoration: 'none' }} {...props} />,
+                  img: ({ ...props }) => <img style={{ maxWidth: '100%' }} {...props} />,
+                  // 添加对 emoji 的支持
+                  em: ({ ...props }) => <em style={{ fontStyle: 'italic' }} {...props} />,
+                  strong: ({ ...props }) => <strong style={{ fontWeight: 'bold' }} {...props} />,
+                  // 确保 emoji 能够正确显示
+                  text: ({ ...props }) => {
+                    // 处理文本节点，确保 emoji 能够正确渲染
+                    return <span>{props.children}</span>;
+                  }
+                }}
+              >
+                {content}
+              </ReactMarkdown>
+            </div>
           )}
         </div>
       )}
@@ -241,9 +241,9 @@ const JSONViewer = ({ fileUrl, loading }) => {
       ) : error ? (
         <div className="flex flex-col items-center justify-center w-full h-full">
           <p className="text-red-500 mb-4">{t("fileReader.errors.jsonViewFailed")}</p>
-          <Button 
+          <Button
             onClick={() => window.location.reload()}
-            style={{ 
+            style={{
               backgroundColor: '#ffffff',
               borderColor: '#000000',
               color: '#000000'
@@ -256,12 +256,12 @@ const JSONViewer = ({ fileUrl, loading }) => {
       ) : (
         <div className="bg-white p-4 rounded-lg border border-gray-200 h-full overflow-y-auto w-full">
           <div className="w-full overflow-x-auto">
-            <SyntaxHighlighter 
-              language="json" 
+            <SyntaxHighlighter
+              language="json"
               style={tomorrow}
-              customStyle={{ 
-                margin: 0, 
-                borderRadius: '0.375rem', 
+              customStyle={{
+                margin: 0,
+                borderRadius: '0.375rem',
                 width: '100%'
               }}
               showLineNumbers={true}
@@ -281,7 +281,7 @@ const JSONViewer = ({ fileUrl, loading }) => {
 const PDFViewer = ({ fileUrl, loading }) => {
   const [numPages, setNumPages] = useState(null);
   const [error, setError] = useState(false);
-  const [key, setKey] = useState(0); 
+  const [key, setKey] = useState(0);
   const [scale, setScale] = useState(0.8); // 设置一个默认缩放比例
   const containerRef = useRef(null);
 
@@ -317,7 +317,7 @@ const PDFViewer = ({ fileUrl, loading }) => {
     window.addEventListener('resize', handleResize);
     // 组件挂载后也调用一次
     adjustScale();
-    
+
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -343,9 +343,9 @@ const PDFViewer = ({ fileUrl, loading }) => {
       ) : error ? (
         <div className="flex flex-col items-center justify-center w-full h-full">
           <p className="text-red-500 mb-4">文档加载失败</p>
-          <Button 
+          <Button
             onClick={handleRetry}
-            style={{ 
+            style={{
               backgroundColor: '#ffffff',
               borderColor: '#000000',
               color: '#000000'
@@ -363,9 +363,9 @@ const PDFViewer = ({ fileUrl, loading }) => {
           onLoadError={onDocumentLoadError}
           className="pdf-document"
         >
-          {Array.from(new Array(numPages), ( _el, index) => (
-            <Page 
-              key={`page_${index + 1}`} 
+          {Array.from(new Array(numPages), (_el, index) => (
+            <Page
+              key={`page_${index + 1}`}
               pageNumber={index + 1}
               renderAnnotationLayer={false}
               renderTextLayer={false}
@@ -428,9 +428,9 @@ const TxtViewer = ({ fileUrl, loading }) => {
       ) : error ? (
         <div className="flex flex-col items-center justify-center w-full h-full">
           <p className="text-red-500 mb-4">文本文件加载失败</p>
-          <Button 
+          <Button
             onClick={() => window.location.reload()}
-            style={{ 
+            style={{
               backgroundColor: '#ffffff',
               borderColor: '#000000',
               color: '#000000'
@@ -450,7 +450,7 @@ const TxtViewer = ({ fileUrl, loading }) => {
 };
 
 // 在 FileReader 组件中添加一个获取图标的函数
-function  FileReader() {
+function FileReader() {
   const [sourceFileUrl, setSourceFileUrl] = useState(null);
   const [translatedFileUrl, setTranslatedFileUrl] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -493,22 +493,22 @@ function  FileReader() {
     }
   };
   // 添加离开确认函数
-  
+
   const handleBeforeAction = (callback) => {
-    if (progress >=0 && progress < 100) {
+    if (progress >= 0 && progress < 100) {
       Modal.confirm({
         title: t('fileReader.leaveConfirm.title'),
-      content: t('fileReader.leaveConfirm.content'),
-      okText: t('fileReader.leaveConfirm.ok'),
-      cancelText: t('fileReader.leaveConfirm.cancel'),
+        content: t('fileReader.leaveConfirm.content'),
+        okText: t('fileReader.leaveConfirm.ok'),
+        cancelText: t('fileReader.leaveConfirm.cancel'),
         okButtonProps: {
-          style: { 
-            backgroundColor: '#000000', 
-            borderColor: '#000000' 
+          style: {
+            backgroundColor: '#000000',
+            borderColor: '#000000'
           }
         },
         cancelButtonProps: {
-          style: { 
+          style: {
             borderColor: '#000000',
             color: '#000000'
           }
@@ -544,8 +544,8 @@ function  FileReader() {
         // 修改文件列表格式化部分
         const formattedFiles = data.files.map((file, index) => ({
           id: index,
-          name:file.name,
-          title: file.origin_name?file.origin_name:"Docment",
+          name: file.name,
+          title: file.origin_name ? file.origin_name : "Docment",
           type: file.name.split('.').pop().toUpperCase(),
           size: (() => {
             const bytes = file.size;
@@ -559,9 +559,9 @@ function  FileReader() {
             return `${bytes} Bytes`;
           })(),
           lastViewed: (file.updated_at),
-          lang:file.lang,
+          lang: file.lang,
           content: "",
-          sourceurl:file.url,
+          sourceurl: file.url,
           translation: `translated_${lang}_${file.name}`
         }));
         setFileList(formattedFiles);
@@ -578,7 +578,7 @@ function  FileReader() {
     }
   };
 
-  const fetchFileContent = async (_lang: string,filename: string,source:string,userId:string) => {
+  const fetchFileContent = async (_lang: string, filename: string, source: string, userId: string) => {
     if (source === "1") {
       if (sourceFileUrl && sourceFileUrl.startsWith('blob:')) {
         URL.revokeObjectURL(sourceFileUrl);
@@ -589,7 +589,7 @@ function  FileReader() {
         URL.revokeObjectURL(translatedFileUrl);
       }
       setTranslatedFileUrl(null);
-    } 
+    }
     setLoading(true);
     const baseEndpoint = getApiUrl(`/files/${userId}/${filename}`);
     const fileEndpoint = `${baseEndpoint}${baseEndpoint.includes('?') ? '&' : '?'}t=${Date.now()}`;
@@ -633,13 +633,13 @@ function  FileReader() {
         setLoading(false);
       });
   };
- 
+
   // 在组件加载时获取文件列表
   useEffect(() => {
     fetchFileList();
     updateUserTokens();
     if (filename && lang) {
-      fetchFileContent(lang,filename,"1",userId)
+      fetchFileContent(lang, filename, "1", userId)
       setProgress(0);
       handleTranslate();
     }
@@ -661,19 +661,19 @@ function  FileReader() {
   }, [progress]);
 
   useEffect(() => {
-    if (progress !== -2 && progress < 100 && progress >= 0 ) {
+    if (progress !== -2 && progress < 100 && progress >= 0) {
       const interval = setInterval(() => {
         fetch(getApiUrl(`/progress/${filename}`))
           .then(response => response.json())
           .then(data => {
             setProgress(data.progress);
-            if(progress == -2) {
+            if (progress == -2) {
               setLoading(false);
               clearInterval(interval);
               return
             }
             if (data.progress >= 100) {
-              fetchFileContent(lang,`translated_${lang}_${filename}`,"2",userId)
+              fetchFileContent(lang, `translated_${lang}_${filename}`, "2", userId)
               setLoading(false);
               clearInterval(interval);
               updateUserTokens();
@@ -700,24 +700,52 @@ function  FileReader() {
     fetch(getApiUrl('/translate'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ filename, lang ,userId})
+      body: JSON.stringify({ filename, lang, userId })
     })
-      .then(response => response.json())
+      .then(response => {
+        // 先检查 HTTP 状态码
+        if (!response.ok) {
+          return response.json().then(data => {
+            throw { status: response.status, data };
+          });
+        }
+        return response.json();
+      })
       .then(data => {
+        console.log('[TRANSLATE RESPONSE]', data);
         if (data.message === 'Translation started') {
           message.success(t("fileReader.success.translationStarted"));
-        }else if(data.message === 'Translation already exists') {
+        } else if (data.message === 'Translation already exists') {
           message.success(t("fileReader.success.translationExists"));
           setProgress(-1)
-          fetchFileContent(lang,"translated_"+lang+"_"+filename,"2",userId )
-        }else{
-          message.error(t("fileReader.errors.translationFailed"));
+          fetchFileContent(lang, "translated_" + lang + "_" + filename, "2", userId)
+        } else {
+          // 显示具体的错误信息
+          const errorMsg = data.message || t("fileReader.errors.translationFailed");
+          console.error('[TRANSLATE ERROR]', errorMsg, data);
+          message.error(errorMsg);
         }
-
       })
       .catch(error => {
-        console.error('Error starting translation:', error);
-        message.error(t("fileReader.errors.translationFailed"));
+        console.error('[TRANSLATE ERROR] Full error:', error);
+
+        // 处理不同的错误状态
+        if (error.status === 402) {
+          // Token 不足
+          message.error(error.data?.message || t("fileReader.insufficientBalance.content"));
+        } else if (error.status === 404) {
+          // 用户或文件未找到
+          message.error(error.data?.message || 'User or file not found');
+        } else if (error.status === 400) {
+          // 请求错误
+          message.error(error.data?.message || 'Invalid request');
+        } else if (error.data) {
+          // 其他服务器错误
+          message.error(error.data.message || t("fileReader.errors.translationFailed"));
+        } else {
+          // 网络错误
+          message.error(t("fileReader.errors.translationFailed"));
+        }
       });
   };
   // 添加更新用户 tokens 的函数
@@ -730,16 +758,16 @@ function  FileReader() {
         },
         body: JSON.stringify({ userId })
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         // 更新本地存储的用户信息
         const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
         currentUser.tokens = data.data.tokens;
-        console.log("updateUserInfo",data)
+        console.log("updateUserInfo", data)
         localStorage.setItem('user', JSON.stringify(currentUser));
-        const updateEvent = new CustomEvent('updateUserInfo', { 
-          detail: { tokens: data.data.tokens } 
+        const updateEvent = new CustomEvent('updateUserInfo', {
+          detail: { tokens: data.data.tokens }
         });
         window.dispatchEvent(updateEvent);
       } else {
@@ -767,13 +795,13 @@ function  FileReader() {
       });
   };
 
-  const FileViewerComponent = 
-      fileType === 'pdf' ? PDFViewer : 
-      fileType === 'word' ? WordViewer : 
-      fileType === 'txt' ? TxtViewer : 
-      fileType === 'markdown' ? MarkdownViewer :
-      fileType === 'json' ? JSONViewer :
-      PDFViewer;
+  const FileViewerComponent =
+    fileType === 'pdf' ? PDFViewer :
+      fileType === 'word' ? WordViewer :
+        fileType === 'txt' ? TxtViewer :
+          fileType === 'markdown' ? MarkdownViewer :
+            fileType === 'json' ? JSONViewer :
+              PDFViewer;
 
   // 在组件卸载时清理资源
   useEffect(() => {
@@ -786,18 +814,17 @@ function  FileReader() {
         URL.revokeObjectURL(translatedFileUrl);
       }
     };
-  }, []); 
+  }, []);
 
   return (
     <>
-    <div className="min-h-screen flex flex-col bg-gray-50">
+      <div className="min-h-screen flex flex-col bg-gray-50">
         <HeaderComponent />
         <div className="flex-1 pt-16 flex">
-      {/* Document List Sidebar */}
+          {/* Document List Sidebar */}
           <div
-            className={`fixed left-0 top-20 h-[calc(100vh-64px)] bg-white border-r border-gray-100 transition-all duration-300 flex flex-col ${
-              collapsed ? "w-[60px]" : "w-[300px]"
-            }`}
+            className={`fixed left-0 top-20 h-[calc(100vh-64px)] bg-white border-r border-gray-100 transition-all duration-300 flex flex-col ${collapsed ? "w-[60px]" : "w-[300px]"
+              }`}
           >
             {/* Sidebar Header */}
             <div className="h-16 border-b border-gray-100 flex items-center justify-between px-4">
@@ -813,40 +840,39 @@ function  FileReader() {
             </div>
             {/* Document List */}
             <div className="overflow-y-auto" style={{ height: 'calc(100% - 180px)' }}>
-            
-            {!collapsed && fileList.length === 0 ? (
+
+              {!collapsed && fileList.length === 0 ? (
                 <div className="h-full flex items-center justify-center">
                   <div className="text-center">
                     <FileTextOutlined className="text-2xl text-gray-300 mb-4" />
                     <p className="text-gray-500">{t("fileReader.noDocuments")}</p>
                     <Button
-                        style={{ 
-                          backgroundColor: "#000000", 
-                          borderColor: "#000000",
-                          marginTop:10,
-                        }}
-                        className="!rounded-button !text-white ant-btn-black"
-                        onClick={() => handleBeforeAction(() => navigate('/add'))}
-                      >
-                        {t("fileReader.startTranslate")}
-                      </Button>
+                      style={{
+                        backgroundColor: "#000000",
+                        borderColor: "#000000",
+                        marginTop: 10,
+                      }}
+                      className="!rounded-button !text-white ant-btn-black"
+                      onClick={() => handleBeforeAction(() => navigate('/add'))}
+                    >
+                      {t("fileReader.startTranslate")}
+                    </Button>
                   </div>
-                 
+
                 </div>
-              ) :(<></>)}
+              ) : (<></>)}
               {fileList.map((doc, index) => (
                 <div
                   key={doc.id}
-                  className={`p-4 border-b border-gray-50 cursor-pointer transition-all hover:bg-gray-50 ${
-                    selectedDoc === index ? "bg-blue-50" : ""
-                  }`}
+                  className={`p-4 border-b border-gray-50 cursor-pointer transition-all hover:bg-gray-50 ${selectedDoc === index ? "bg-blue-50" : ""
+                    }`}
                   onClick={() => {
                     handleBeforeAction(() => {
                       setSelectedDoc(index)
                       setProgress(-1)
-                      fetchFileContent(doc.lang,doc.name,"1",userId)
-                      fetchFileContent(doc.lang,"translated_"+doc.lang+"_"+doc.name,"2",userId)
-                    }) 
+                      fetchFileContent(doc.lang, doc.name, "1", userId)
+                      fetchFileContent(doc.lang, "translated_" + doc.lang + "_" + doc.name, "2", userId)
+                    })
                   }}
                 >
                   {collapsed ? (
@@ -876,16 +902,15 @@ function  FileReader() {
                       </div>
                       <div className="flex items-center space-x-4 text-sm text-gray-500">
                         <span className="flex items-center space-x-1">
-                          <span 
-                            className={`w-2 h-2 rounded-full ${
-                              doc.type === 'PDF' ? 'bg-red-500' :
-                              doc.type === 'DOC' || doc.type === 'DOCX' ? 'bg-blue-500' :
-                              doc.type === 'XLS' || doc.type === 'XLSX' ? 'bg-green-500' :
-                              doc.type === 'MD' || doc.type === 'MARKDOWN' ? 'bg-purple-500' :
-                              doc.type === 'JSON' ? 'bg-yellow-500' :
-                              doc.type === 'TXT' ? 'bg-gray-500' :
-                              'bg-gray-400'
-                            }`}
+                          <span
+                            className={`w-2 h-2 rounded-full ${doc.type === 'PDF' ? 'bg-red-500' :
+                                doc.type === 'DOC' || doc.type === 'DOCX' ? 'bg-blue-500' :
+                                  doc.type === 'XLS' || doc.type === 'XLSX' ? 'bg-green-500' :
+                                    doc.type === 'MD' || doc.type === 'MARKDOWN' ? 'bg-purple-500' :
+                                      doc.type === 'JSON' ? 'bg-yellow-500' :
+                                        doc.type === 'TXT' ? 'bg-gray-500' :
+                                          'bg-gray-400'
+                              }`}
                           />
                           <span>{doc.type}</span>
                         </span>
@@ -900,130 +925,131 @@ function  FileReader() {
                 </div>
               ))}
               {!collapsed && (
-              <div className="absolute bottom-8 left-0 right-0 p-4 border-t border-gray-100 bg-white">
-                <Button
-                  style={{ 
-                    backgroundColor: "#000000", 
-                    borderColor: "#000000",
-                  }}
-                  className="!rounded-button !text-white ant-btn-black w-full"
-                  onClick={() =>{
-                    handleBeforeAction(()=>{
-                    navigate('/add')
-                  })} }
-                >
-                   {t('fileReader.startTranslate')}
-                </Button>
-              </div>
-            )}
+                <div className="absolute bottom-8 left-0 right-0 p-4 border-t border-gray-100 bg-white">
+                  <Button
+                    style={{
+                      backgroundColor: "#000000",
+                      borderColor: "#000000",
+                    }}
+                    className="!rounded-button !text-white ant-btn-black w-full"
+                    onClick={() => {
+                      handleBeforeAction(() => {
+                        navigate('/add')
+                      })
+                    }}
+                  >
+                    {t('fileReader.startTranslate')}
+                  </Button>
+                </div>
+              )}
             </div>
-           
-            
+
+
           </div>
           <div
-          className={`flex-1 transition-all duration-300 ${collapsed ? "ml-[60px]" : "ml-[320px]"}`}
-        >
-          <div className="min-h-[calc(100vh-64px)] p-6">
-            <div className="bg-white rounded-xl shadow-sm h-full overflow-hidden">
-              {/* Document Header */}
-              <div className="border-b border-gray-100 p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    {fileList[selectedDoc] ? 
-                      getFileIcon(fileList[selectedDoc]?.type) : 
-                      <FileTextOutlined className="text-2xl text-gray-600" />
-                    }
-                    <h1 className="text-xl font-semibold text-gray-800">
-                      {fileList[selectedDoc]?.title || 'No document selected'}
-                    </h1>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      icon={<DownloadOutlined />}
-                      className="!rounded-button"
-                      onClick={() => handleBeforeAction(() => {
-                        handleDownload(translatedFileUrl,fileList[selectedDoc]?.title)
-                      } )}   
-                    >
-                      {t('fileReader.download')}
-                    </Button>
+            className={`flex-1 transition-all duration-300 ${collapsed ? "ml-[60px]" : "ml-[320px]"}`}
+          >
+            <div className="min-h-[calc(100vh-64px)] p-6">
+              <div className="bg-white rounded-xl shadow-sm h-full overflow-hidden">
+                {/* Document Header */}
+                <div className="border-b border-gray-100 p-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      {fileList[selectedDoc] ?
+                        getFileIcon(fileList[selectedDoc]?.type) :
+                        <FileTextOutlined className="text-2xl text-gray-600" />
+                      }
+                      <h1 className="text-xl font-semibold text-gray-800">
+                        {fileList[selectedDoc]?.title || 'No document selected'}
+                      </h1>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Button
+                        icon={<DownloadOutlined />}
+                        className="!rounded-button"
+                        onClick={() => handleBeforeAction(() => {
+                          handleDownload(translatedFileUrl, fileList[selectedDoc]?.title)
+                        })}
+                      >
+                        {t('fileReader.download')}
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Document Content */}
-              <div className="flex h-[calc(100vh-10px)] overflow-hidden">
-                <div className="w-1/2 p-6 border-r border-gray-100 overflow-hidden">
-                  <div className="mb-4">
-                    <h3 className="text-lg font-semibold text-gray-700">
-                    {t('fileReader.original')}
-                    </h3>
-                  </div>
-                  <div className={`h-[calc(100%-32px)] ${fileType !== 'word' ? 'overflow-auto' : ''}`}>
-                    {sourceFileUrl ? (
-                      <div key={`source-${fileType}-${sourceFileUrl || ''}`}>
-                      <FileViewerComponent fileUrl={sourceFileUrl} loading={loading} />
-                      </div>
-                    ) : (
-                      <div className="h-full flex items-center justify-center">
-                        <div className="text-center">
-                          <FileTextOutlined className="text-4xl text-gray-300 mb-4" />
-                          <p className="text-gray-500">{t('fileReader.noFileView')}</p>
+                {/* Document Content */}
+                <div className="flex h-[calc(100vh-10px)] overflow-hidden">
+                  <div className="w-1/2 p-6 border-r border-gray-100 overflow-hidden">
+                    <div className="mb-4">
+                      <h3 className="text-lg font-semibold text-gray-700">
+                        {t('fileReader.original')}
+                      </h3>
+                    </div>
+                    <div className={`h-[calc(100%-32px)] ${fileType !== 'word' ? 'overflow-auto' : ''}`}>
+                      {sourceFileUrl ? (
+                        <div key={`source-${fileType}-${sourceFileUrl || ''}`}>
+                          <FileViewerComponent fileUrl={sourceFileUrl} loading={loading} />
                         </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="w-1/2 p-6 overflow-hidden">
-                  <div className="mb-4">
-                    <h3 className="text-lg font-semibold text-gray-700">
-                    {t('fileReader.translation')}
-                    </h3>
-                  </div>
-                  <div className={`h-[calc(100%-32px)] ${fileType !== 'word' ? 'overflow-auto' : ''}`}>
-                    {translatedFileUrl && (progress === 100 || progress === -1) ? (
-                      <div key={`translated-${fileType}-${translatedFileUrl || ''}`}>
-                      <FileViewerComponent fileUrl={translatedFileUrl} loading={loading} />
-                      </div>
-                    ) : (
-                      <div className="h-full flex items-center justify-center">
-                        <div className="text-center w-full px-20">
-                          <FileTextOutlined className="text-4xl text-gray-300 mb-4" />
-                          {progress === -2 ? (
-                            <>
-                              <p className="text-red-500 mb-2">文件格式无效</p>
-                              <p className="text-gray-500">{t('fileReader.invalidFormat')}</p>
-                            </>
-                          ) : progress >= 0 ? (
-                            <>
-                              <Progress 
-                                percent={Number(progress.toFixed(1))}
-                                status="active"
-                                strokeColor={{
-                                  '0%': '#52c41a',
-                                  '100%': '#52c41a'
-                                }}
-                              />
-                              <p className="text-gray-500 mt-4">{t('fileReader.translatingNow')}</p>
-                            </>
-                          ) : (
-                            <>
-                             <p className="text-gray-500">{t('fileReader.noFileView')}</p>
-                            </>
-                          )}
+                      ) : (
+                        <div className="h-full flex items-center justify-center">
+                          <div className="text-center">
+                            <FileTextOutlined className="text-4xl text-gray-300 mb-4" />
+                            <p className="text-gray-500">{t('fileReader.noFileView')}</p>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
+                  </div>
+                  <div className="w-1/2 p-6 overflow-hidden">
+                    <div className="mb-4">
+                      <h3 className="text-lg font-semibold text-gray-700">
+                        {t('fileReader.translation')}
+                      </h3>
+                    </div>
+                    <div className={`h-[calc(100%-32px)] ${fileType !== 'word' ? 'overflow-auto' : ''}`}>
+                      {translatedFileUrl && (progress === 100 || progress === -1) ? (
+                        <div key={`translated-${fileType}-${translatedFileUrl || ''}`}>
+                          <FileViewerComponent fileUrl={translatedFileUrl} loading={loading} />
+                        </div>
+                      ) : (
+                        <div className="h-full flex items-center justify-center">
+                          <div className="text-center w-full px-20">
+                            <FileTextOutlined className="text-4xl text-gray-300 mb-4" />
+                            {progress === -2 ? (
+                              <>
+                                <p className="text-red-500 mb-2">文件格式无效</p>
+                                <p className="text-gray-500">{t('fileReader.invalidFormat')}</p>
+                              </>
+                            ) : progress >= 0 ? (
+                              <>
+                                <Progress
+                                  percent={Number(progress.toFixed(1))}
+                                  status="active"
+                                  strokeColor={{
+                                    '0%': '#52c41a',
+                                    '100%': '#52c41a'
+                                  }}
+                                />
+                                <p className="text-gray-500 mt-4">{t('fileReader.translatingNow')}</p>
+                              </>
+                            ) : (
+                              <>
+                                <p className="text-gray-500">{t('fileReader.noFileView')}</p>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        </div>
-       
-    </div>
-    
+
+      </div>
+
     </>
 
   );
