@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Input, Checkbox, message, Dropdown, Menu } from 'antd';
-import {  LockOutlined, MailOutlined, EyeOutlined, EyeInvisibleOutlined, GlobalOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined, EyeOutlined, EyeInvisibleOutlined, GlobalOutlined } from '@ant-design/icons';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -16,7 +16,7 @@ const Login = () => {
     rememberMe: false
   });
   const { t } = useLanguage();
-  const { language, setLanguage} = useLanguage();
+  const { language, setLanguage } = useLanguage();
 
   const handleSubmit = async () => {
     if (!form.email || !form.password) {
@@ -34,7 +34,11 @@ const Login = () => {
       if (response.status === 200 && response.data.user) {
         message.success(t('login.success'));
         localStorage.setItem('user', JSON.stringify(response.data.user));
-        navigate('/');
+
+        // 检查 URL 参数中的 redirect
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect') || '/';
+        navigate(redirect);
       } else {
         message.error(t('login.errors.loginFailed'));
       }
@@ -57,49 +61,52 @@ const Login = () => {
     try {
       const response = await fetch(getApiUrl('/auth/google'));
       const data = await response.json();
-      
+
       // 创建消息监听器，在打开窗口前设置
       const googleAuthListener = (event) => {
         // 不限制来源，因为可能跨域
         console.log('收到消息:', event);
         console.log('消息数据:', event.data);
         console.log('消息来源:', event.origin);
-        
+
         try {
           // 尝试解析消息数据
           const messageData = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
-          
+
           // 处理认证成功的消息
           if (messageData.type === 'google-auth-success' && messageData.user) {
             console.log('认证成功，用户数据:', messageData.user);
-            
+
             // 保存用户信息到本地
             localStorage.setItem('user', JSON.stringify(messageData.user));
             message.success(t('login.success'));
-            
+
             // 移除事件监听器
             window.removeEventListener('message', googleAuthListener);
-            
+
             // 关闭认证窗口
             if (authWindow && !authWindow.closed) {
               authWindow.close();
             }
-            
-            navigate('/');
+
+            // 检查 URL 参数中的 redirect
+            const params = new URLSearchParams(window.location.search);
+            const redirect = params.get('redirect') || '/';
+            navigate(redirect);
           }
         } catch (error) {
           console.error('处理消息时出错:', error);
         }
-        
+
         setLoading(false);
       };
-      
+
       // 先添加事件监听
       window.addEventListener('message', googleAuthListener);
-      
+
       // 打开新窗口进行Google认证
       const authWindow = window.open(data.auth_url, 'google_login', 'width=600,height=700');
-      
+
       // 检查窗口是否被阻止
       if (!authWindow || authWindow.closed || typeof authWindow.closed === 'undefined') {
         message.error(t('login.errors.popupBlocked'));
@@ -107,7 +114,7 @@ const Login = () => {
         setLoading(false);
         return;
       }
-      
+
       // 设置定时器检查窗口是否关闭
       const checkWindowClosed = setInterval(() => {
         if (authWindow.closed) {
@@ -116,7 +123,7 @@ const Login = () => {
           setLoading(false);
         }
       }, 500);
-      
+
     } catch (error) {
       console.error('Google登录失败:', error);
       message.success(t('login.error.googleLoginFailed'));
@@ -134,42 +141,45 @@ const Login = () => {
         const wechatAuthListener = (event) => {
           console.log('收到微信登录消息:', event);
           console.log('微信消息数据:', event.data);
-          
+
           try {
             // 尝试解析消息数据
             const messageData = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
-            
+
             // 处理认证成功的消息
             if (messageData.type === 'wechat-auth-success' && messageData.user) {
               console.log('微信认证成功，用户数据:', messageData.user);
-              
+
               // 保存用户信息到本地
               localStorage.setItem('user', JSON.stringify(messageData.user));
               message.success(t('login.success'));
-              
+
               // 移除事件监听器
               window.removeEventListener('message', wechatAuthListener);
-              
+
               // 关闭认证窗口
               if (wechatWindow && !wechatWindow.closed) {
                 wechatWindow.close();
               }
-              
-              navigate('/');
+
+              // 检查 URL 参数中的 redirect
+              const params = new URLSearchParams(window.location.search);
+              const redirect = params.get('redirect') || '/';
+              navigate(redirect);
             }
           } catch (error) {
             console.error('处理微信消息时出错:', error);
           }
-          
+
           setLoading(false);
         };
-        
+
         // 先添加事件监听
         window.addEventListener('message', wechatAuthListener);
-        
+
         // 打开新窗口显示微信二维码
         const wechatWindow = window.open(response.data.auth_url, 'wechat_login', 'width=400,height=500');
-        
+
         // 检查窗口是否被阻止
         if (!wechatWindow || wechatWindow.closed || typeof wechatWindow.closed === 'undefined') {
           message.error(t('login.errors.popupBlocked'));
@@ -177,7 +187,7 @@ const Login = () => {
           setLoading(false);
           return;
         }
-        
+
         // 设置定时器检查窗口是否关闭
         const checkWindowClosed = setInterval(() => {
           if (wechatWindow.closed) {
@@ -197,46 +207,46 @@ const Login = () => {
       setLoading(false);
     }
   };
-// 语言切换菜单
-const languageMenu = (
-  <Menu>
-    {supportedLanguages.map((lang) => (
-      <Menu.Item 
-        key={lang.code} 
-        onClick={() => setLanguage(lang.code)}
-        className={language === lang.code ? 'bg-gray-100' : ''}
-      >
-        <div className="flex items-center">
-          <span className="mr-2">{lang.flag}</span>
-          <span>{lang.name}</span>
-        </div>
-      </Menu.Item>
-    ))}
-  </Menu>
-);
+  // 语言切换菜单
+  const languageMenu = (
+    <Menu>
+      {supportedLanguages.map((lang) => (
+        <Menu.Item
+          key={lang.code}
+          onClick={() => setLanguage(lang.code)}
+          className={language === lang.code ? 'bg-gray-100' : ''}
+        >
+          <div className="flex items-center">
+            <span className="mr-2">{lang.flag}</span>
+            <span>{lang.name}</span>
+          </div>
+        </Menu.Item>
+      ))}
+    </Menu>
+  );
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
       <div className="w-full bg-white/95 backdrop-blur-sm border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2 hover:opacity-75 transition-opacity">
-          <img
+            <img
               src="/t_logo.png"
               alt="TransAll"
-              style={{width: 'auto', height: '68px', objectFit: 'contain'}}
+              style={{ width: 'auto', height: '68px', objectFit: 'contain' }}
             />
             <span className="text-xl font-semibold text-gray-900">
               TranAll
             </span>
           </Link>
           <Dropdown overlay={languageMenu} placement="bottomRight">
-          <Button 
-            type="text" 
-            icon={<GlobalOutlined />} 
-            className="flex items-center"
-          >
-            <span className="ml-1">{supportedLanguages.find(l => l.code === language)?.flag}</span>
-          </Button>
-        </Dropdown>
+            <Button
+              type="text"
+              icon={<GlobalOutlined />}
+              className="flex items-center"
+            >
+              <span className="ml-1">{supportedLanguages.find(l => l.code === language)?.flag}</span>
+            </Button>
+          </Dropdown>
         </div>
       </div>
       <div className="w-full max-w-[1440px] min-h-[calc(100vh-64px)] mx-auto flex items-center justify-center p-4">
@@ -250,11 +260,11 @@ const languageMenu = (
             />
             <div className="absolute inset-0 bg-white/60 flex flex-col justify-center px-12 backdrop-blur-sm">
               <h2 className="text-4xl font-bold text-gray-800 mb-6">
-              {t('login.welcome.title')}
+                {t('login.welcome.title')}
               </h2>
               <p className="text-xl text-gray-600">
-              {t('login.welcome.subtitle')}
-                            </p>
+                {t('login.welcome.subtitle')}
+              </p>
             </div>
           </div>
 
@@ -262,17 +272,17 @@ const languageMenu = (
           <div className="w-full max-w-md mx-auto p-8 bg-white rounded-2xl shadow-xl border border-gray-100">
             <div className="text-center mb-8">
               <h1 className="text-2xl font-bold text-gray-900">
-              {t('login.title')}
+                {t('login.title')}
               </h1>
               <p className="text-gray-600 mt-2">
-              {t('login.subtitle')}
+                {t('login.subtitle')}
               </p>
             </div>
 
             <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                {t('login.email.label')}
+                  {t('login.email.label')}
                 </label>
                 <Input
                   prefix={<MailOutlined className="text-gray-400" />}
@@ -286,7 +296,7 @@ const languageMenu = (
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                {t('login.password.label')}
+                  {t('login.password.label')}
                 </label>
                 <Input
                   prefix={<LockOutlined className="text-gray-400" />}
@@ -315,10 +325,10 @@ const languageMenu = (
                   checked={form.rememberMe}
                   onChange={(e) => handleInputChange('rememberMe', e.target.checked)}
                 >
-                 {t('login.rememberMe')}
+                  {t('login.rememberMe')}
                 </Checkbox>
                 <Button type="link" className="text-sm">
-                {t('login.forgotPassword')}?
+                  {t('login.forgotPassword')}?
                 </Button>
               </div>
 
@@ -362,9 +372,9 @@ const languageMenu = (
               </div>
 
               <p className="text-center text-sm text-gray-600 mt-8">
-               {t('login.noAccount')}?{' '}
+                {t('login.noAccount')}?{' '}
                 <Link to="/regist" className="text-black hover:text-gray-800 font-semibold">
-                {t('login.signUp')}
+                  {t('login.signUp')}
                 </Link>
               </p>
             </form>

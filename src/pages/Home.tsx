@@ -8,13 +8,13 @@
  * @LastEditTime: 2025-03-20 15:19:52
  */
 import { useEffect } from 'react';
-import {  Button } from 'antd';
+import { Button } from 'antd';
 import { ArrowRightOutlined } from '@ant-design/icons';  // 添加这行
 import HeaderComponent from '@/component/Header';
 import FooterComponet from '@/component/Footer';
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
-import { CheckOutlined } from '@ant-design/icons'; 
+import { CheckOutlined } from '@ant-design/icons';
 const Home = () => {
   const { t } = useLanguage();
   useEffect(() => {
@@ -37,10 +37,10 @@ const Home = () => {
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
               <h1 className="text-5xl leading-tight font-bold text-gray-900 mb-8">
-              {t('hero.title')}
+                {t('hero.title')}
               </h1>
               <p className="text-xl leading-relaxed text-gray-600 mb-10 max-w-2xl">
-              {t('hero.subtitle')}
+                {t('hero.subtitle')}
               </p>
               <div className="flex gap-4">
                 <Button
@@ -48,11 +48,10 @@ const Home = () => {
                   size="large"
                   className="ant-btn-black !rounded-button"
                   onClick={() => {
-                    const storedUser = localStorage.getItem('user');
-                    navigate(storedUser ? '/add' : '/login');
+                    navigate('/add');
                   }}
                 >
-                 {t('hero.tryNow')}
+                  {t('hero.tryNow')}
                   <ArrowRightOutlined className="ml-2" />
                 </Button>
                 <Button
@@ -73,7 +72,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-       <section id="features" className="py-24 bg-white">
+      <section id="features" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-20">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -99,25 +98,25 @@ const Home = () => {
                 icon: "fas fa-brain",
                 title: t('features.accuracy.title'),
                 description:
-                t('features.accuracy.description'),
+                  t('features.accuracy.description'),
               },
               {
                 icon: "fas fa-shield-alt",
                 title: t('features.security.title'),
                 description:
-                t('features.security.description'),
+                  t('features.security.description'),
               },
               {
                 icon: "fas fa-history",
                 title: t('features.memory.title'),
                 description:
-                t('features.memory.description'),
+                  t('features.memory.description'),
               },
               {
                 icon: "fas fa-globe",
                 title: t('features.languages.title'),
                 description:
-                t('features.languages.description'),
+                  t('features.languages.description'),
               },
             ].map((feature, index) => (
               <div
@@ -186,7 +185,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-       <section
+      <section
         id="pricing"
         className="py-24 bg-gradient-to-b from-white to-gray-50"
       >
@@ -203,7 +202,7 @@ const Home = () => {
             {[
               {
                 name: t('pricing.basic.name'),
-                price: "$9.99",
+                price: "$0.99",
                 features: [
                   t('pricing.basic.features.1'),
                   t('pricing.basic.features.2'),
@@ -232,7 +231,7 @@ const Home = () => {
                 highlight: false,
               },
             ].map((plan, index) => (
-             
+
               <div
                 key={index}
                 className={`bg-white p-10 rounded-xl transition-shadow ${plan.highlight ? "border-2 border-black" : "border border-gray-200"}`}
@@ -243,7 +242,7 @@ const Home = () => {
                 <div className="text-4xl font-bold text-gray-900 mb-6">
                   {plan.price}
                   {index === 0 ? (
-                    <span className="text-lg text-gray-500">/10k Tokens</span>
+                    <span className="text-lg text-gray-500">/10k Credits</span>
                   ) : plan.price !== t('pricing.custom') && (
                     <span className="text-lg text-gray-500">/mo</span>
                   )}
@@ -251,7 +250,7 @@ const Home = () => {
                 <ul className="space-y-4 mb-10">
                   {plan.features.map((feature, fIndex) => (
                     <li key={fIndex} className="flex items-center">
-                      <CheckOutlined className="fas fa-check text-green-500 mr-2"/>
+                      <CheckOutlined className="fas fa-check text-green-500 mr-2" />
                       {feature}
                     </li>
                   ))}
@@ -264,7 +263,16 @@ const Home = () => {
                     const storedUser = localStorage.getItem('user');
                     if (storedUser) {
                       const userData = JSON.parse(storedUser);
-                      return index == 1 && userData.vip === 1;
+                      // Disable professional plan if already VIP
+                      if (index === 1 && userData.vip === 1) {
+                        return true;
+                      }
+                      // Disable basic plan if user has active VIP
+                      if (index === 0 && userData.vip === 1 && userData.vipExpiredAt) {
+                        const expiredAt = new Date(userData.vipExpiredAt);
+                        const now = new Date();
+                        return expiredAt > now; // Disable if VIP is still active
+                      }
                     }
                     return false;
                   })()}
@@ -275,15 +283,15 @@ const Home = () => {
                       navigate('/login');
                       return;
                     }
-                    
+
                     // 导航到支付页面，并传递订单信息
-                    const paymentUrl = `/payment?plan=${encodeURIComponent(plan.name)}&price=${encodeURIComponent(plan.price)}&period=${encodeURIComponent(index === 0 ? '/10k Tokens' : plan.price !== t('pricing.custom') ? '/mo' : '')}`;
-                    
+                    const paymentUrl = `/payment?plan=${encodeURIComponent(plan.name)}&price=${encodeURIComponent(plan.price)}&period=${encodeURIComponent(index === 0 ? '/10k Credits' : plan.price !== t('pricing.custom') ? '/mo' : '')}`;
+
                     // 在新窗口中打开支付页面
                     window.open(paymentUrl, '_blank');
                   }}
                 >
-                   {(() => {
+                  {(() => {
                     const storedUser = localStorage.getItem('user');
                     if (storedUser) {
                       const userData = JSON.parse(storedUser);

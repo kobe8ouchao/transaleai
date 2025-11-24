@@ -50,7 +50,7 @@ const languagesArr = [
     label: 'Russian',
     flag: '🇷🇺'
   },
- 
+
   {
     value: 'Japanese',
     label: 'Japanese',
@@ -92,18 +92,13 @@ function AddFile() {
   const [pendingFile, setPendingFile] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
-  const storedUser = localStorage.getItem('user');
   const { t } = useLanguage();
-  if (!storedUser) {
-    window.location.href = `/login`
-  }
-  const userId = JSON.parse(localStorage.getItem('user') || '{}').id;
 
   useEffect(() => {
   }, []);
 
 
- 
+
   // 添加 MD5 计算函数
   const calculateMD5 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -122,10 +117,16 @@ function AddFile() {
     name: 'file',
     multiple: true,
     action: getApiUrl('/upload'),
-    data: { userId, targetLang },
     beforeUpload: async (file: File) => {
+      // 检查是否登录
+      const storedUser = localStorage.getItem('user');
+      if (!storedUser) {
+        window.location.href = `/login?redirect=/add`;
+        return Upload.LIST_IGNORE;
+      }
+
       // 获取用户信息并检查 VIP 和 tokens
-      const userData = JSON.parse(localStorage.getItem('user') || '{}');
+      const userData = JSON.parse(storedUser);
       if (Number(userData.vip) !== 1) {
         if (Number(userData.tokens) <= 0) {
           Modal.confirm({
@@ -134,13 +135,13 @@ function AddFile() {
             okText: t('addFile.recharge'),
             cancelText: t('cancel'),
             okButtonProps: {
-              style: { 
-                backgroundColor: '#000000', 
-                borderColor: '#000000' 
+              style: {
+                backgroundColor: '#000000',
+                borderColor: '#000000'
               }
             },
             cancelButtonProps: {
-              style: { 
+              style: {
                 borderColor: '#000000',
                 color: '#000000'
               }
@@ -174,21 +175,21 @@ function AddFile() {
           return Upload.LIST_IGNORE; // 阻止文件被添加到上传列表
         }
       }
-      
+
       // 计算文件 MD5
       const md5 = await calculateMD5(file);
       const fileExt = file.name.split('.').pop();
       const newFileName = `${md5}.${fileExt}`;
-      
+
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('userId', userId);
+      formData.append('userId', userData.id);
       formData.append('targetLang', targetLang);
       formData.append('size', file.size.toString());
       formData.append('type', fileExt);
       formData.append('originalName', file.name);
       formData.append('md5Name', newFileName);
-      
+
       setIsUploading(true);
       fetch(getApiUrl('/upload'), {
         method: 'POST',
@@ -221,7 +222,14 @@ function AddFile() {
 
 
   const onChange = async (value: string) => {
-    const userData = JSON.parse(localStorage.getItem('user') || '{}');
+    // 检查是否登录
+    const storedUser = localStorage.getItem('user');
+    if (!storedUser) {
+      window.location.href = `/login?redirect=/add`;
+      return;
+    }
+
+    const userData = JSON.parse(storedUser);
     if (Number(userData.vip) !== 1) {
       if (Number(userData.tokens) <= 0) {
         Modal.confirm({
@@ -230,13 +238,13 @@ function AddFile() {
           okText: t('addFile.recharge'),
           cancelText: t('cancel'),
           okButtonProps: {
-            style: { 
-              backgroundColor: '#000000', 
-              borderColor: '#000000' 
+            style: {
+              backgroundColor: '#000000',
+              borderColor: '#000000'
             }
           },
           cancelButtonProps: {
-            style: { 
+            style: {
               borderColor: '#000000',
               color: '#000000'
             }
@@ -269,7 +277,7 @@ function AddFile() {
       const fileExt = pendingFile.name.split('.').pop();
       const newFileName = `${md5}.${fileExt}`;
       formData.append('file', pendingFile);
-      formData.append('userId', userId);
+      formData.append('userId', userData.id);
       formData.append('targetLang', value);
       formData.append('size', pendingFile.size.toString());
       formData.append('type', fileExt);
@@ -295,7 +303,7 @@ function AddFile() {
         .finally(() => {
           setPendingFile(null);
           setIsUploading(false);
-        }); 
+        });
     }
     setTargetLang(value);
   };
@@ -303,7 +311,7 @@ function AddFile() {
 
   return (
     <div className="min-h-screen bg-white">
-       <style>
+      <style>
         {`
           .custom-upload-dragger:hover {
             border-color: #1D2939 !important;
@@ -317,40 +325,40 @@ function AddFile() {
           <div className="border-b border-gray-100 pb-6 mb-6">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-semibold text-[#1D2939]">
-              {t('addFile.title')}
+                {t('addFile.title')}
               </h2>
               <div className="flex items-center space-x-3">
                 <span className="text-[#1D2939]">{t('addFile.targetLanguage')}:</span>
-               
-                                <Select
-                                  value={targetLang}
-                                  onChange={onChange}
-                                  options={languagesArr}
-                                  className="w-64"
-                                  placeholder="Select language"
-                                  optionLabelProp="label"
-                                  optionRender={(option) => (
-                                    <Space>
-                                      <span role="img" aria-label={option.data.label}>
-                                        {option.data.flag}
-                                      </span>
-                                      {option.data.label}
-                                    </Space>
-                                  )}
-                                  // 添加自定义选中值的渲染
-                                  suffixIcon={null}
-                                  labelRender={(labelInfo) => {
-                                    const selectedOption = languagesArr.find(item => item.value === labelInfo.value);
-                                    return selectedOption ? (
-                                      <Space>
-                                        <span role="img" aria-label={selectedOption.label}>
-                                          {selectedOption.flag}
-                                        </span>
-                                        {selectedOption.label}
-                                      </Space>
-                                    ) : labelInfo.label;
-                                  }}
-                                />
+
+                <Select
+                  value={targetLang}
+                  onChange={onChange}
+                  options={languagesArr}
+                  className="w-64"
+                  placeholder="Select language"
+                  optionLabelProp="label"
+                  optionRender={(option) => (
+                    <Space>
+                      <span role="img" aria-label={option.data.label}>
+                        {option.data.flag}
+                      </span>
+                      {option.data.label}
+                    </Space>
+                  )}
+                  // 添加自定义选中值的渲染
+                  suffixIcon={null}
+                  labelRender={(labelInfo) => {
+                    const selectedOption = languagesArr.find(item => item.value === labelInfo.value);
+                    return selectedOption ? (
+                      <Space>
+                        <span role="img" aria-label={selectedOption.label}>
+                          {selectedOption.flag}
+                        </span>
+                        {selectedOption.label}
+                      </Space>
+                    ) : labelInfo.label;
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -368,10 +376,10 @@ function AddFile() {
                 </div>
                 <div className="text-center max-w-md mx-auto">
                   <p className="text-[#1D2939] text-lg font-medium mb-2">
-                  {t('addFile.dragText')} {t('addFile.clickText')}
+                    {t('addFile.dragText')} {t('addFile.clickText')}
                   </p>
                   <p className="text-gray-500 text-sm">
-                  {t('addFile.supportedFormats')}, {t('addFile.maxSize')}
+                    {t('addFile.supportedFormats')}, {t('addFile.maxSize')}
                   </p>
                 </div>
               </div>
@@ -398,7 +406,7 @@ function AddFile() {
       </Modal>
       <FooterComponet />
     </div>
-      
+
   );
 }
 

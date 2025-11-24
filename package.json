@@ -26,6 +26,7 @@
     "less": "^4.2.0",
     "mammoth": "^1.8.0",
     "pdfjs-dist": "^4.3.136",
+    "qrcode.react": "^4.2.0",
     "react": "^18.2.0",
     "react-doc-viewer": "^0.1.13",
     "react-dom": "^18.2.0",

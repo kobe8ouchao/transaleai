@@ -14,7 +14,8 @@ import FileReader from '@/pages/FileReader'
 import Register from '@/pages/Register'
 import Login from '@/pages/Login'
 import Term from '@/pages/Term'
-import Payment from '@/pages/Payment'
+import Payment from '../pages/Payment';
+import PaymentSuccess from '../pages/PaymentSuccess';
 
 export default function Router() {
   return useRoutes([
@@ -41,6 +42,10 @@ export default function Router() {
     {
       path: '/payment',
       element: <Payment />,
+    },
+    {
+      path: '/payment/success',
+      element: <PaymentSuccess />,
     },
     {
       path: '/term',
