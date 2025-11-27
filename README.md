@@ -1,3 +1,7 @@
+<div align="center">
+  <img width="460" height="460" alt="t_logo" src="https://github.com/user-attachments/assets/7b34c9c2-e92b-4867-a742-7d43166cbef2" />
+</div>
+
 # TranslateAI - Format-Preserving Document Translation
 
 [](https://translateai.vercel.app/)
@@ -66,9 +70,22 @@ TranslateAI is a web application that translates documents while preserving thei
 - **Batch processing**: Handle multiple documents efficiently
 - **Quality settings**: Balance between speed and translation quality
 
-## ⚙️ Configuration
+### Installation Steps
 
-### Environment Variables
+1. **Clone the repository**
+```bash
+git clone https://github.com/your-username/translateai.git
+```
+```bash
+cd translateai
+npm install
+```
+2. **Environment setup**
+```bash
+cp .env.example .env.local
+echo "OPENAI_API_KEY=your_api_key_here" >> .env.local 
+```
+open http://localhost:3000# 
 
 ### Reporting Issues
 Use GitHub Issues to report bugs or request features. Please include:
