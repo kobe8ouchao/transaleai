@@ -92,6 +92,9 @@ echo "OPENAI_API_KEY=your_api_key_here" >> .env.local
 ```
 open http://localhost:3000# 
 
+3. **Server setup**
+**[Check this respo:https://github.com/kobe8ouchao/translateai_server](https://github.com/kobe8ouchao/translateai_server))**
+
 ### Reporting Issues
 Use GitHub Issues to report bugs or request features. Please include:
 - Detailed description of the issue
