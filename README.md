@@ -1,35 +1,92 @@
-# React + TypeScript + Vite
+# TranslateAI - Format-Preserving Document Translation
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[](https://translateai.vercel.app/)
+[](https://nextjs.org/)
+[](LICENSE)
 
-Currently, two official plugins are available:
+TranslateAI is a web application that translates documents while preserving their original formatting structure. Perfect for translating technical documentation, reports, and formatted content without losing layout integrity.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Core Features
 
-## Expanding the ESLint configuration
+### 🎯 Format Preservation
+- **Maintains original structure**: Headings, lists, tables, and styling remain intact
+- **Multi-format support**: Processes `.docx`, `.txt`, `.md`, and other common formats
+- **Layout integrity**: Preserves visual formatting and document structure
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### 🤖 AI-Powered Translation
+- **Advanced AI models**: Leverages OpenAI GPT-4 for context-aware translations
+- **Automatic language detection**: Smart source language identification
+- **Translation quality**: High-quality output with contextual understanding
 
-- Configure the top-level `parserOptions` property like this:
+### ⚡ Performance & UX
+- **Fast processing**: Optimized translation pipeline for quick results
+- **Responsive design**: Works seamlessly across desktop and mobile devices
+- **Drag-and-drop interface**: Easy file upload with real-time preview
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## 🚀 Quick Start
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Prerequisites
+- Node.js 18+ installed
+- OpenAI API key
 
-1、支付宝支付功能
-2、免费用户只能上传3个文件
-3、翻译支持txt，json ，excel，ppt，markdown
-4、确定价格，按次收费，计算token
+### Installation
+```bash
+  Clone the repository
+
+  git clone https://github.com/your-username/translateai.git
+
+  cd translateai
+
+#Install dependencies
+  npm install
+- Set up environment variables
+- cp .env.example .env.local
+- Add your OpenAI API key to .env.local
+
+### Development
+```bash
+Start development server
+npm run dev
+
+Open http://localhost:3000 in your browser
+
+## 🛠️ Technology Stack
+
+### Frontend Architecture
+- **Framework**: Next.js 13 (App Router) with React 18
+- **Styling**: Tailwind CSS + Shadcn UI components
+- **UI Toolkit**: Radix UI primitives
+
+### Backend & Processing
+- **Translation Engine**: OpenAI GPT-4 API
+- **Document Processing**: Unified.js ecosystem with Remark/Rehype
+- **Format Handling**: Mammoth.js (for DOCX), Remark (for Markdown)
+
+### Deployment & Infrastructure
+- **Hosting**: Vercel Edge Functions
+- **Performance**: Vercel Edge Network for fast global access
+- **API Routes**: Next.js API endpoints for serverless functions
+
+## 📖 Usage Guide
+
+### Basic Translation Workflow
+1. **Upload Document**: Drag and drop or click to upload your file
+2. **Select Languages**: Choose source (auto-detect available) and target languages
+3. **Translate**: Click translate and watch the AI process your document
+4. **Download**: Get your perfectly formatted translated document
+
+### Supported Formats
+| Format | Features | Best For |
+|--------|----------|----------|
+| **DOCX** | Full formatting preservation | Technical docs, reports |
+| **TXT** | Plain text translation | Simple documents |
+| **MD** | Markdown syntax preservation | Documentation, blogs |
+
+### Advanced Features
+- **Formatting options**: Toggle between strict preservation and relaxed mode
+- **Batch processing**: Handle multiple documents efficiently
+- **Quality settings**: Balance between speed and translation quality
+
+## ⚙️ Configuration
+
+### Environment Variables
