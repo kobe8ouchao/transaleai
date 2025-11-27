@@ -10,6 +10,11 @@
 
 TranslateAI is a web application that translates documents while preserving their original formatting structure. Perfect for translating technical documentation, reports, and formatted content without losing layout integrity.
 
+## 🚀 Try It Now!
+
+**[👉 Live Demo: https://translateai.vercel.app](https://translateai.vercel.app)**
+
+Experience the power of AI-powered document translation with full formatting preservation!
 ## ✨ Core Features
 
 ### 🎯 Format Preservation
@@ -118,8 +123,6 @@ All document processing happens securely - files are processed in memory and not
 - **v1.2.0**: Added advanced formatting options and batch processing
 - **v1.1.0**: Enhanced mobile responsiveness and performance optimizations
 - **v1.0.0**: Initial release with core translation functionality
-
-[View full changelog](CHANGELOG.md)
 
 **Keywords**: document translation, format-preserving translation, AI translation tool, DOCX translator, Markdown translation, formatting preservation, multilingual document processing, Next.js translation app, OpenAI translation, document processing
 
