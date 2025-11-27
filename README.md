@@ -29,27 +29,6 @@ TranslateAI is a web application that translates documents while preserving thei
 - Node.js 18+ installed
 - OpenAI API key
 
-### Installation
-```bash
-  Clone the repository
-
-  git clone https://github.com/your-username/translateai.git
-
-  cd translateai
-
-#Install dependencies
-  npm install
-- Set up environment variables
-- cp .env.example .env.local
-- Add your OpenAI API key to .env.local
-
-### Development
-```bash
-Start development server
-npm run dev
-
-Open http://localhost:3000 in your browser
-
 ## 🛠️ Technology Stack
 
 ### Frontend Architecture
@@ -90,3 +69,43 @@ Open http://localhost:3000 in your browser
 ## ⚙️ Configuration
 
 ### Environment Variables
+
+### Reporting Issues
+Use GitHub Issues to report bugs or request features. Please include:
+- Detailed description of the issue
+- Steps to reproduce
+- Browser/OS information
+- Error messages or screenshots
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## ❓ FAQ
+
+### 🤔 How does format preservation work?
+The system analyzes document structure and applies translation while maintaining original layout, including headings, lists, tables, and styling through advanced parsing algorithms.
+
+### 💰 Is there a cost to use TranslateAI?
+The application is free to use, but you'll need your own OpenAI API key for translation services. The demo uses limited credits for testing.
+
+### 📱 Is the application mobile-friendly?
+Yes! The interface is fully responsive and optimized for mobile devices with touch-friendly controls and adaptive layout.
+
+### 🔒 What about privacy and data security?
+All document processing happens securely - files are processed in memory and not stored on servers. For maximum privacy, you can self-host the application.
+
+## 🆕 Changelog
+
+### Latest Updates
+- **v1.2.0**: Added advanced formatting options and batch processing
+- **v1.1.0**: Enhanced mobile responsiveness and performance optimizations
+- **v1.0.0**: Initial release with core translation functionality
+
+[View full changelog](CHANGELOG.md)
+
+**Keywords**: document translation, format-preserving translation, AI translation tool, DOCX translator, Markdown translation, formatting preservation, multilingual document processing, Next.js translation app, OpenAI translation, document processing
+
+**Tech Stack**: nextjs, react, tailwindcss, openai, vercel, document-translation, ai-translation, formatting-preservation
+
+*Built with ❤️ using Next.js and OpenAI*
