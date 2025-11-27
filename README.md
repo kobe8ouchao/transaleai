@@ -12,7 +12,7 @@ TranslateAI is a web application that translates documents while preserving thei
 
 ## 🚀 Try It Now!
 
-**[👉 Live Demo: https://translateai.vercel.app](https://translateai.vercel.app)**
+**[👉 Live Demo: https://transaleai.vercel.app](https://transaleai.vercel.app/)**
 
 Experience the power of AI-powered document translation with full formatting preservation!
 ## ✨ Core Features
