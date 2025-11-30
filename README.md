@@ -1,10 +1,10 @@
 <div align="center">
-  <img width="460" height="460" alt="t_logo" src="https://github.com/user-attachments/assets/7b34c9c2-e92b-4867-a742-7d43166cbef2" />
+  <a href="https://translates.cc/" target="_blank"><img width="460" height="460" alt="t_logo" src="https://github.com/user-attachments/assets/7b34c9c2-e92b-4867-a742-7d43166cbef2" /></a>
 </div>
 
 # TranslateAI - Format-Preserving Document Translation
 
-[](https://translateai.vercel.app/)
+[](https://translates.cc/)
 [](https://nextjs.org/)
 [](LICENSE)
 
@@ -12,7 +12,7 @@ TranslateAI is a web application that translates documents while preserving thei
 
 ## 🚀 Try It Now!
 
-**[👉 Live Demo: https://transaleai.vercel.app](https://transaleai.vercel.app/)**
+<a href="https://translates.cc/" target="_blank">**[👉 Live Demo: https://transaleai.vercel.app](https://translates.cc/)**</a>
 
 Experience the power of AI-powered document translation with full formatting preservation!
 ## ✨ Core Features
