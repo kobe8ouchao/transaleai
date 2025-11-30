@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /payment/success
+
+# Sitemap
+Sitemap: https://translates.cc/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 10

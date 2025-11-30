@@ -16,36 +16,37 @@ export default {
   documents: 'Documents',
   noDocuments: 'No Documents',
   hero: {
-    title: 'Fast and Accurate Document Translation',
-    subtitle: 'Professional multi-language document translation service powered by advanced AI technology',
-    watchDemo: 'Watch Demo' // 原"观看演示"翻译
+    title: 'Fast and Accurate AI Document Translation with Format Retention',
+    subtitle: 'Secure, highly accurate AI translation service. Preserve original layouts, tables, and images in PDF, Word, PowerPoint and more.',
+    tryNow: 'Try it Free',
+    watchDemo: 'Watch Demo'
   },
   features: {
-    title: 'Powerful Features for All Needs', // "强大的功能满足所有需求"
-    subtitle: 'Advanced Tools to Streamline Your Translation Workflow', // "先进的工具让您的翻译工作流程更轻松"
+    title: 'Why Choose TransAll?',
+    subtitle: 'Enterprise-grade features for perfect document translation',
     realtime: {
-      title: 'Real-time Translation',
-      description: 'Instant translations using our advanced AI technology'
+      title: 'Lightning-Fast Translation',
+      description: 'Instant AI-powered translations that save you hours of manual work'
     },
     format: {
-      title: 'Format Preservation',
-      description: 'Maintain document layout, styles, and formatting during translation'
+      title: 'Perfect Format Preservation for All File Types',
+      description: 'Keep your original layouts, tables, images, and formatting intact across PDF, Word, PowerPoint, and more'
     },
     accuracy: {
-      title: 'AI-Powered Accuracy',
-      description: 'Context-aware translations with industry-leading accuracy'
+      title: 'Highly Accurate AI Translation',
+      description: 'Context-aware translations with industry-leading accuracy powered by advanced AI'
     },
     security: {
-      title: 'Security & Privacy',
-      description: 'Enterprise-grade security with end-to-end encryption'
+      title: 'Enterprise-Grade Security for Your Confidential Documents',
+      description: 'Bank-level encryption and strict privacy policies protect your sensitive information'
     },
     memory: {
       title: 'Translation Memory',
-      description: 'Save and reuse previous translations for consistency'
+      description: 'Save and reuse previous translations for consistency across all your documents'
     },
     languages: {
-      title: '100+ Languages',
-      description: 'Support for all major languages and regional variants'
+      title: '100+ Languages Supported',
+      description: 'Translate to and from all major languages with regional dialect support'
     }
   },
   solutions: {

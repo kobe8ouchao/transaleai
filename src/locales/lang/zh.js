@@ -28,41 +28,37 @@ export default {
     description: '全球营销活动本地化'
   },
   hero: {
-    title: '快速、准确的文档翻译',
-    subtitle: '使用先进的 AI 技术，为您提供专业的多语言文档翻译服务，PDF, DOCX, ePub..完美保留原文的排版',
+    title: '快速准确的AI文档翻译，完美保留格式',
+    subtitle: '安全、高精度的AI翻译服务。完美保留PDF、Word、PowerPoint等文档的原始布局、表格和图片。',
     watchDemo: '观看演示',
-    features: '特色功能',
-    feature1: '支持多种文件格式',
-    feature2: '实时翻译进度',
-    feature3: '准确的翻译质量',
-    tryNow: '立即体验'
+    tryNow: '免费试用'
   },
   features: {
-    title: '强大的功能满足所有需求',
-    subtitle: '先进的工具让您的翻译工作流程更轻松',
+    title: '为什么选择 TransAll？',
+    subtitle: '企业级功能，完美文档翻译',
     realtime: {
-      title: '实时翻译',
-      description: '使用我们的先进 AI 技术获得即时翻译'
+      title: '闪电般快速翻译',
+      description: '即时AI翻译，为您节省数小时的手动工作'
     },
     format: {
-      title: '格式保持',
-      description: '在翻译过程中保持文档布局、样式和格式'
+      title: '所有文件类型的完美格式保留',
+      description: 'PDF、Word、PowerPoint等文档的原始布局、表格、图片和格式完整保留'
     },
     accuracy: {
-      title: 'AI 驱动的准确性',
-      description: '具有行业领先准确率的上下文感知翻译'
+      title: '高精度AI翻译',
+      description: '先进AI驱动的上下文感知翻译，行业领先的准确性'
     },
     security: {
-      title: '安全与隐私',
-      description: '企业级安全性，端到端加密'
+      title: '企业级安全保护您的机密文档',
+      description: '银行级加密和严格的隐私政策保护您的敏感信息'
     },
     memory: {
-      title: '翻译记忆',
-      description: '保存并重用以前的翻译以保持一致性'
+      title: '翻译记忆库',
+      description: '保存并重用以前的翻译，确保所有文档的一致性'
     },
     languages: {
-      title: '10+ 种语言',
-      description: '支持10+主要语言和地区变体'
+      title: '支持100+种语言',
+      description: '支持所有主要语言及地区方言的互译'
     }
   },
   solutions: {

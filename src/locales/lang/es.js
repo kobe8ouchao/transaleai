@@ -16,41 +16,41 @@ export default {
   documents: 'Documenti',
   noDocuments: 'Nessun documento',
   hero: {
-    title: 'Traduzione rapida e precisa',
-    subtitle: 'Servizio professionale con tecnologia AI',
-    watchDemo: 'Guarda demo',
+    title: 'Traducción de Documentos con IA Rápida y Precisa con Retención de Formato',
+    subtitle: 'Servicio de traducción con IA seguro y altamente preciso. Preserve diseños originales, tablas e imágenes en PDF, Word, PowerPoint y más.',
+    watchDemo: 'Ver Demo',
     features: 'Caratteristiche',
     feature1: 'Formati multipli',
     feature2: 'Progresso in tempo reale',
     feature3: 'Massima precisione',
-    tryNow: 'Prova ora'
+    tryNow: 'Prueba Gratis'
   },
   features: {
-    title: 'Funzionalità avanzate',
-    subtitle: 'Strumenti di traduzione professionali',
+    title: '¿Por Qué Elegir TransAll?',
+    subtitle: 'Funciones de nivel empresarial para traducción perfecta de documentos',
     realtime: {
-      title: 'Traduzione istantanea',
-      description: 'Tecnologia AI in tempo reale'
+      title: 'Traducción Ultrarrápida',
+      description: 'Traducciones instantáneas con IA que le ahorran horas de trabajo manual'
     },
     format: {
-      title: 'Mantieni formato',
-      description: 'Conserva il layout originale'
+      title: 'Retención Perfecta de Formato para Todos los Tipos de Archivos',
+      description: 'Mantenga intactos sus diseños originales, tablas, imágenes y formato en PDF, Word, PowerPoint y más'
     },
     accuracy: {
-      title: 'Precisione AI',
-      description: 'Traduzioni contestualizzate'
+      title: 'Traducción con IA de Alta Precisión',
+      description: 'Traducciones conscientes del contexto con precisión líder en la industria impulsada por IA avanzada'
     },
     security: {
-      title: 'Sicurezza',
-      description: 'Crittografia avanzata'
+      title: 'Seguridad de Nivel Empresarial para Sus Documentos Confidenciales',
+      description: 'Cifrado de nivel bancario y políticas de privacidad estrictas protegen su información sensible'
     },
     memory: {
-      title: 'Memoria traduzioni',
-      description: 'Archivia traduzioni precedenti'
+      title: 'Memoria de Traducción',
+      description: 'Guarde y reutilice traducciones anteriores para mantener la coherencia en todos sus documentos'
     },
     languages: {
-      title: '100+ lingue',
-      description: 'Supporto multilingue'
+      title: 'Más de 100 Idiomas Soportados',
+      description: 'Traduzca desde y hacia todos los idiomas principales con soporte de dialectos regionales'
     }
   },
   solutions: {

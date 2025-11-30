@@ -16,6 +16,11 @@ import Login from '@/pages/Login'
 import Term from '@/pages/Term'
 import Payment from '../pages/Payment';
 import PaymentSuccess from '../pages/PaymentSuccess';
+import FormatRetention from '../pages/FormatRetention';
+import WordTranslation from '../pages/WordTranslation';
+import LegalTranslation from '../pages/LegalTranslation';
+import AcademicTranslation from '../pages/AcademicTranslation';
+import BusinessTranslation from '../pages/BusinessTranslation';
 
 export default function Router() {
   return useRoutes([
@@ -50,6 +55,26 @@ export default function Router() {
     {
       path: '/term',
       element: <Term />,
+    },
+    {
+      path: '/features/format-retention',
+      element: <FormatRetention />,
+    },
+    {
+      path: '/translate/word-document',
+      element: <WordTranslation />,
+    },
+    {
+      path: '/solutions/legal-translation',
+      element: <LegalTranslation />,
+    },
+    {
+      path: '/solutions/academic-translation',
+      element: <AcademicTranslation />,
+    },
+    {
+      path: '/solutions/business-translation',
+      element: <BusinessTranslation />,
     }
   ])
 }
