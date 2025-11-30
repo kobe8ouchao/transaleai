@@ -17,17 +17,17 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center space-x-2 mb-6">
-            <img
-              src="/t_logo.png"
-              alt="TransAll"
-              style={{width: 'auto', height: '68px', objectFit: 'contain'}}
-            />
+              <img
+                src="/t_logo.png"
+                alt="TransAll"
+                style={{ width: 'auto', height: '68px', objectFit: 'contain' }}
+              />
               <span className="text-xl font-semibold">
-              {t('footer.title')}
+                {t('footer.title')}
               </span>
             </div>
             <p className="text-gray-400">
-            {t('footer.subtitle')}
+              {t('footer.subtitle')}
             </p>
           </div>
           <div>
@@ -45,6 +45,7 @@ const Footer = () => {
               <li><a href="/term" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"> {t('footer.privacy')}</a></li>
               <li><a href="/term" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"> {t('footer.terms')}</a></li>
               <li><a href="/term" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{t('footer.security')}</a></li>
+              <li><a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Sitemap</a></li>
             </ul>
           </div>
           <div>
@@ -58,8 +59,8 @@ const Footer = () => {
           </div>
         </div>
         <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-          <p>© {new Date().getFullYear()} {t('footer.copyright')}. 
-          {t('footer.allRightsReserved')}</p>
+          <p>© {new Date().getFullYear()} {t('footer.copyright')}.
+            {t('footer.allRightsReserved')}</p>
         </div>
       </div>
     </footer>
