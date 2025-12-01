@@ -132,81 +132,81 @@ const Login = () => {
   };
 
   // 将 handleGithubLogin 改为 handleWechatLogin
-  const handleWechatLogin = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(getApiUrl('/auth/wechat/login'));
-      if (response.data.auth_url) {
-        // 创建消息监听器，在打开窗口前设置
-        const wechatAuthListener = (event) => {
-          console.log('收到微信登录消息:', event);
-          console.log('微信消息数据:', event.data);
+  // const handleWechatLogin = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await axios.get(getApiUrl('/auth/wechat/login'));
+  //     if (response.data.auth_url) {
+  //       // 创建消息监听器，在打开窗口前设置
+  //       const wechatAuthListener = (event) => {
+  //         console.log('收到微信登录消息:', event);
+  //         console.log('微信消息数据:', event.data);
 
-          try {
-            // 尝试解析消息数据
-            const messageData = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+  //         try {
+  //           // 尝试解析消息数据
+  //           const messageData = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
 
-            // 处理认证成功的消息
-            if (messageData.type === 'wechat-auth-success' && messageData.user) {
-              console.log('微信认证成功，用户数据:', messageData.user);
+  //           // 处理认证成功的消息
+  //           if (messageData.type === 'wechat-auth-success' && messageData.user) {
+  //             console.log('微信认证成功，用户数据:', messageData.user);
 
-              // 保存用户信息到本地
-              localStorage.setItem('user', JSON.stringify(messageData.user));
-              message.success(t('login.success'));
+  //             // 保存用户信息到本地
+  //             localStorage.setItem('user', JSON.stringify(messageData.user));
+  //             message.success(t('login.success'));
 
-              // 移除事件监听器
-              window.removeEventListener('message', wechatAuthListener);
+  //             // 移除事件监听器
+  //             window.removeEventListener('message', wechatAuthListener);
 
-              // 关闭认证窗口
-              if (wechatWindow && !wechatWindow.closed) {
-                wechatWindow.close();
-              }
+  //             // 关闭认证窗口
+  //             if (wechatWindow && !wechatWindow.closed) {
+  //               wechatWindow.close();
+  //             }
 
-              // 检查 URL 参数中的 redirect
-              const params = new URLSearchParams(window.location.search);
-              const redirect = params.get('redirect') || '/';
-              navigate(redirect);
-            }
-          } catch (error) {
-            console.error('处理微信消息时出错:', error);
-          }
+  //             // 检查 URL 参数中的 redirect
+  //             const params = new URLSearchParams(window.location.search);
+  //             const redirect = params.get('redirect') || '/';
+  //             navigate(redirect);
+  //           }
+  //         } catch (error) {
+  //           console.error('处理微信消息时出错:', error);
+  //         }
 
-          setLoading(false);
-        };
+  //         setLoading(false);
+  //       };
 
-        // 先添加事件监听
-        window.addEventListener('message', wechatAuthListener);
+  //       // 先添加事件监听
+  //       window.addEventListener('message', wechatAuthListener);
 
-        // 打开新窗口显示微信二维码
-        const wechatWindow = window.open(response.data.auth_url, 'wechat_login', 'width=400,height=500');
+  //       // 打开新窗口显示微信二维码
+  //       const wechatWindow = window.open(response.data.auth_url, 'wechat_login', 'width=400,height=500');
 
-        // 检查窗口是否被阻止
-        if (!wechatWindow || wechatWindow.closed || typeof wechatWindow.closed === 'undefined') {
-          message.error(t('login.errors.popupBlocked'));
-          window.removeEventListener('message', wechatAuthListener);
-          setLoading(false);
-          return;
-        }
+  //       // 检查窗口是否被阻止
+  //       if (!wechatWindow || wechatWindow.closed || typeof wechatWindow.closed === 'undefined') {
+  //         message.error(t('login.errors.popupBlocked'));
+  //         window.removeEventListener('message', wechatAuthListener);
+  //         setLoading(false);
+  //         return;
+  //       }
 
-        // 设置定时器检查窗口是否关闭
-        const checkWindowClosed = setInterval(() => {
-          if (wechatWindow.closed) {
-            clearInterval(checkWindowClosed);
-            window.removeEventListener('message', wechatAuthListener);
-            setLoading(false);
-          }
-        }, 500);
-      } else {
-        message.error(t('login.errors.wechatLoginFailed'));
-      }
-    } catch (error) {
-      console.error('微信登录失败:', error);
-      message.error('微信登录失败，请稍后重试');
-      setLoading(false);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //       // 设置定时器检查窗口是否关闭
+  //       const checkWindowClosed = setInterval(() => {
+  //         if (wechatWindow.closed) {
+  //           clearInterval(checkWindowClosed);
+  //           window.removeEventListener('message', wechatAuthListener);
+  //           setLoading(false);
+  //         }
+  //       }, 500);
+  //     } else {
+  //       message.error(t('login.errors.wechatLoginFailed'));
+  //     }
+  //   } catch (error) {
+  //     console.error('微信登录失败:', error);
+  //     message.error('微信登录失败，请稍后重试');
+  //     setLoading(false);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   // 语言切换菜单
   const languageMenu = (
     <Menu>
