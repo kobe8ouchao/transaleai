@@ -352,7 +352,7 @@ const Login = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1">
                 <Button
                   size="large"
                   onClick={handleGoogleLogin}
@@ -361,14 +361,14 @@ const Login = () => {
                 >
                   <span>Google</span>
                 </Button>
-                <Button
+                {/* <Button
                   size="large"
                   onClick={handleWechatLogin}
                   className="!rounded-button flex items-center justify-center space-x-2 border border-gray-200 hover:border-black hover:bg-gray-50 focus:border-black active:border-black transition-colors"
                   icon={<img src="/icon_wechat.png" alt="WeChat" className="w-5 h-5" />}
                 >
                   <span>Wechat</span>
-                </Button>
+                </Button> */}
               </div>
 
               <p className="text-center text-sm text-gray-600 mt-8">
