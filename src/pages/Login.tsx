@@ -23,7 +23,11 @@ const Login = () => {
       message.error(t('login.errors.emailPassword'));
       return;
     }
-
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'sign_up', {
+        'method': 'email' // 可选：添加注册方式
+      });
+    }
     setLoading(true);
     try {
       const response = await axios.post(getApiUrl('/login'), {
@@ -58,6 +62,11 @@ const Login = () => {
 
   const handleGoogleLogin = async () => {
     setLoading(true);
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'sign_up', {
+        'method': 'google' // 可选：添加注册方式
+      });
+    }
     try {
       const response = await fetch(getApiUrl('/auth/google'));
       const data = await response.json();
