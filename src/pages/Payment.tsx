@@ -145,7 +145,7 @@ const Payment = () => {
         }
         if (data.code === 200) {
           setOrderId(data.data.orderId);
-          const url = `${data.data.checkoutUrl}?theme=dark`;
+  
           Modal.confirm({
             title: t('payment.confirmPayment'),
             content: t('payment.confirmPaymentTip'),
