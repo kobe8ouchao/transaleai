@@ -9,14 +9,6 @@ import { useSearchParams } from 'react-router-dom';
 import { getApiUrl } from '@/config/api';
  
 
-// 微信支付图标组件
-const WechatPayIcon = () => (
-  <div><svg viewBox="0 0 1024 1024" width="1.6em" height="1.6em" fill="currentColor">
-    <path d="M692.3 432.7c11.6 0 23.1 0.9 34.5 2.2-31-144.3-184.8-251.5-360.7-251.5C163.6 183.4 0 320.2 0 493.8c0 100.4 54.7 183 146.1 247.2l-36.5 109.7 127.5-63.9c45.7 9 82.2 18.2 127.8 18.2 11.5 0 22.8-0.5 34.1-1.4-7.1-24.5-11.3-50.2-11.3-76.8 0.1-159.9 137.3-289.1 304.6-289.1z m-214.4-92.2c27.4 0 45.6 18 45.6 45.3 0 27.1-18.2 45.5-45.6 45.5-27.2 0-54.7-18.4-54.7-45.5 0-27.3 27.5-45.3 54.7-45.3z m-254.2 90.8c-27.2 0-54.8-18.4-54.8-45.5 0-27.3 27.6-45.3 54.8-45.3 27.2 0 45.4 18 45.4 45.3 0 27.1-18.2 45.5-45.4 45.5z" fill="#09BB07"></path>
-    <path d="M1024 658.8c0-145.4-145.5-263.9-309.2-263.9-173.5 0-309.7 118.5-309.7 263.9 0 145.6 136.2 263.9 309.7 263.9 36.3 0 72.8-9.1 109.1-18.2l99.7 54.7-27.4-91c73.2-54.9 127.8-127.6 127.8-209.4z m-412.2-45.4c-18.2 0-36.5-18-36.5-36.4 0-18.2 18.3-36.5 36.5-36.5 27.6 0 45.6 18.3 45.6 36.5 0 18.4-18 36.4-45.6 36.4z m199.9 0c-18 0-36.3-18-36.3-36.4 0-18.2 18.3-36.5 36.3-36.5 27.4 0 45.6 18.3 45.6 36.5 0 18.4-18.2 36.4-45.6 36.4z" fill="#09BB07"></path>
-  </svg></div>
-
-);
 
 const Payment = () => {
   const { t } = useLanguage();
@@ -236,22 +228,6 @@ const Payment = () => {
       return null;
     }
   };
-
-  const pollUserInfoUntilUpdated = async (initialTokens: number, initialVip: number, maxAttempts = 15, intervalMs = 2000) => {
-    for (let i = 0; i < maxAttempts; i++) {
-      const data = await fetchUserInfo();
-      if (data) {
-        const tokensChanged = typeof data.tokens === 'number' && data.tokens > (initialTokens || 0);
-        const vipChanged = typeof data.vip === 'number' && data.vip !== (initialVip || 0);
-        if (tokensChanged || vipChanged) {
-          return true;
-        }
-      }
-      await new Promise(res => setTimeout(res, intervalMs));
-    }
-    return false;
-  };
-
   
 
   const renderPaymentForm = () => {
