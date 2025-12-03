@@ -14,6 +14,7 @@ import FileReader from '@/pages/FileReader'
 import Register from '@/pages/Register'
 import Login from '@/pages/Login'
 import Term from '@/pages/Term'
+import Privacy from '@/pages/Privacy'
 import Payment from '../pages/Payment';
 import PaymentSuccess from '../pages/PaymentSuccess';
 import FormatRetention from '../pages/FormatRetention';
@@ -55,6 +56,10 @@ export default function Router() {
     {
       path: '/term',
       element: <Term />,
+    },
+    {
+      path: '/privacy',
+      element: <Privacy />,
     },
     {
       path: '/features/format-retention',

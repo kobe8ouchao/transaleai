@@ -42,9 +42,9 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">{t('footer.legal')}</h4>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="/term" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"> {t('footer.privacy')}</a></li>
+              <li><a href="/privacy" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"> {t('footer.privacy')}</a></li>
               <li><a href="/term" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors"> {t('footer.terms')}</a></li>
-              <li><a href="/term" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{t('footer.security')}</a></li>
+              <li><a href="/privacy#security" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{t('footer.security')}</a></li>
               <li><a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Sitemap</a></li>
             </ul>
           </div>

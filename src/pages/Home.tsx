@@ -202,7 +202,7 @@ const Home = () => {
             {[
               {
                 name: t('pricing.basic.name'),
-                price: "$0.99",
+                price: "$4.99",
                 features: [
                   t('pricing.basic.features.1'),
                   t('pricing.basic.features.2'),

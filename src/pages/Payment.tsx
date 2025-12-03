@@ -6,12 +6,8 @@ import FooterComponet from '@/component/Footer';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useSearchParams } from 'react-router-dom';
-import { Elements } from '@stripe/react-stripe-js';
-import StripeCheckoutForm from '@/component/StripeForm';
 import { getApiUrl } from '@/config/api';
-import { loadStripe } from '@stripe/stripe-js';
-
-const stripePromise = loadStripe('pk_test_51OKFXUDSf9nvOOkrhNyAbJi6xCQmzBjrUj8JYPRMp6dZsSMc2T2xlH3L3kAmjjzycApHYkxljGjskRHB8zK3hymm00BVwcbouz');
+ 
 
 // 微信支付图标组件
 const WechatPayIcon = () => (
@@ -32,6 +28,7 @@ const Payment = () => {
   const price = searchParams.get('price') || '';
   const period = searchParams.get('period') || '';
   const userId = JSON.parse(localStorage.getItem('user') || '{}').id;
+  const userEmail = JSON.parse(localStorage.getItem('user') || '{}').email || '';
   const [showQrModal, setShowQrModal] = useState(false);
   const [orderId, setOrderId] = useState('');
   const [polling, setPolling] = useState(false);
@@ -42,7 +39,7 @@ const Payment = () => {
     price,
     period
   };
-
+  
 
   const handlePaymentMethodChange = (e) => {
     setPaymentMethod(e.target.value);
@@ -132,6 +129,73 @@ const Payment = () => {
       } finally {
         setLoading(false);
       }
+    } else if (paymentMethod === 'creem') {
+      setLoading(true);
+      try {
+        const response = await fetch(getApiUrl('/create-creem-order'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId,
+            orderType: 'consumption',
+            planName: orderInfo.planName || 'Basic 4.99',
+            price: 4.99,
+            period: orderInfo.period || '',
+            email: userEmail,
+            requestId: `${userId || 'guest'}_${Date.now()}`
+          })
+        });
+        const data = await response.json();
+        if (response.status === 403 && data.code === 'VIP_RESTRICTION') {
+          message.error(t('payment.vipRestriction'));
+          setLoading(false);
+          return;
+        }
+        if (data.code === 200 && data.data.checkoutUrl) {
+          setOrderId(data.data.orderId);
+          const url = `${data.data.checkoutUrl}?theme=dark`;
+          Modal.confirm({
+            title: t('payment.confirmPayment'),
+            content: t('payment.confirmPaymentTip'),
+            okText: t('payment.completed'),
+            cancelText: t('payment.notYet'),
+            onOk: async () => {
+              try {
+                const statusResponse = await fetch(getApiUrl(`/check-creem-status?orderId=${data.data.orderId}`));
+                const statusData = await statusResponse.json();
+                if (statusData.code === 200 && statusData.data.status === 'paid') {
+                  message.success(t('payment.success'));
+                  const userResponse = await fetch(getApiUrl(`/user/${userId}`));
+                  const userData = await userResponse.json();
+                  if (userData.code === 200) {
+                    localStorage.setItem('user', JSON.stringify(userData.data));
+                    window.dispatchEvent(new CustomEvent('updateUserInfo', {
+                      detail: {
+                        tokens: userData.data.tokens,
+                        vip: userData.data.vip,
+                        vipExpiredAt: userData.data.vipExpiredAt
+                      }
+                    }));
+                  }
+                  navigate('/payment/success');
+                } else {
+                  message.warning(t('payment.pendingStatus'));
+                }
+              } catch (error) {
+                message.error(t('payment.checkFailed'));
+              }
+            },
+            onCancel: () => message.info(t('payment.waitingPayment'))
+          });
+          window.open(url, '_blank');
+        } else {
+          message.error(data.error || t('payment.createOrderFailed'));
+        }
+      } catch (error) {
+        message.error(t('payment.createOrderFailed'));
+      } finally {
+        setLoading(false);
+      }
     } else {
       // 其他支付方式的处理逻辑
       message.loading(t('payment.processing'), 1.5)
@@ -188,23 +252,7 @@ const Payment = () => {
     return false;
   };
 
-  // 修改支付成功的处理方法
-  const handleStripePaymentSuccess = async () => {
-    setCurrentStep(2);
-    const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-    const initialTokens = currentUser.tokens || 0;
-    const initialVip = currentUser.vip || 0;
-    const updated = await pollUserInfoUntilUpdated(initialTokens, initialVip);
-    if (updated) {
-      message.success(t('payment.success'));
-    } else {
-      message.warning(t('payment.pendingStatus'));
-    }
-  };
-
-  const handleStripePaymentError = (errorMessage) => {
-    message.error(errorMessage || t('payment.failed'));
-  };
+  
 
   const renderPaymentForm = () => {
     switch (paymentMethod) {
@@ -223,13 +271,7 @@ const Payment = () => {
       case 'stripe':
         return (
           <div className="bg-gray-50 p-6 rounded-lg">
-            <Elements stripe={stripePromise}>
-              <StripeCheckoutForm
-                onPaymentSuccess={handleStripePaymentSuccess}
-                onPaymentError={handleStripePaymentError}
-                amount={orderInfo.price}
-              />
-            </Elements>
+           
           </div>
         );
       case 'wechat':
@@ -301,24 +343,24 @@ const Payment = () => {
                       <span>{t('payment.alipay')}</span>
                     </div>
                   </Radio>
-                  <Radio value="stripe" className="w-full">
+                  <Radio value="creem" className="w-full">
                     <div className="flex items-center p-3 border rounded-lg w-full">
                       <CreditCardOutlined className="text-2xl text-purple-500 mr-3" />
                       <span>{t('payment.creditCard')}</span>
                     </div>
                   </Radio>
-                  <Radio value="wechat" className="w-full">
+                  {/* <Radio value="wechat" className="w-full">
                     <div className="flex items-center p-3 border rounded-lg w-full">
                       <WechatPayIcon />
                       <span className="ml-3">{t('payment.wechat')}</span>
                     </div>
-                  </Radio>
+                  </Radio> */}
                 </div>
               </Radio.Group>
             </Card>
 
             {renderPaymentForm()}
-            {(paymentMethod === 'alipay' || paymentMethod === 'wechat') && (
+            {(paymentMethod === 'alipay' || paymentMethod === 'creem') && (
               <div className="flex justify-end mt-8">
                 <Button
                   style={{ backgroundColor: "#000000", borderColor: "#000000" }}
