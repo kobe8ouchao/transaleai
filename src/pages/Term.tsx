@@ -16,7 +16,7 @@ const Term = () => {
             <div className="space-y-8">
               <div>
                 <h3 className="text-xl font-medium text-[#1D2939] mb-4">
-                  1. Acceptance of Terms
+                  1. XYCloud Acceptance of Terms
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
                   By accessing and using our document translation service, you
@@ -68,7 +68,7 @@ const Term = () => {
       <section id="privacy" className="bg-[#f7f7f8] py-16">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-semibold text-[#1D2939] mb-12">
-            Privacy Policy
+             XYCloud Privacy Policy
           </h2>
           <div className="prose max-w-none">
             <div className="space-y-8">
@@ -118,7 +118,7 @@ const Term = () => {
                 </p>
                 <div className="mt-4 p-4 bg-white rounded-lg shadow-sm">
                   <p className="text-gray-600">
-                    Email: privacy@documenttranslation.com
+                    Email: privacy@xycloud.com
                   </p>
                   <p className="text-gray-600">Phone: +1 (555) 123-4567</p>
                   <p className="text-gray-600">
