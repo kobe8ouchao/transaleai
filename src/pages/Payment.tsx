@@ -131,7 +131,7 @@ const Payment = () => {
             userId,
             orderType: 'consumption',
             planName: orderInfo.planName || 'Basic 4.99',
-            price: 4.99,
+            price: orderInfo.price,
             period: orderInfo.period || '',
             email: userEmail,
             requestId: `${userId || 'guest'}_${Date.now()}`
