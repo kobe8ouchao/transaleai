@@ -143,7 +143,7 @@ const Payment = () => {
           setLoading(false);
           return;
         }
-        if (data.code === 200 && data.data.checkoutUrl) {
+        if (data.code === 200) {
           setOrderId(data.data.orderId);
           const url = `${data.data.checkoutUrl}?theme=dark`;
           Modal.confirm({
@@ -179,7 +179,7 @@ const Payment = () => {
             },
             onCancel: () => message.info(t('payment.waitingPayment'))
           });
-          window.open(url, '_blank');
+          window.open("https://www.creem.io/test/payment/prod_4CPAzKEcqM9U1U672WojQN", '_blank');
         } else {
           message.error(data.error || t('payment.createOrderFailed'));
         }
