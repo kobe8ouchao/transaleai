@@ -202,32 +202,32 @@ const Payment = () => {
   };
 
 
-  // 添加获取用户信息的方法
-  const fetchUserInfo = async () => {
-    try {
-      const response = await fetch(getApiUrl('/user/info'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userId })
-      });
-      if (!response.ok) {
-        throw new Error('获取用户信息失败');
-      }
-      const userData = await response.json();
-      localStorage.setItem('user', JSON.stringify(userData.data));
-      const updateEvent = new CustomEvent('updateUserInfo', {
-        detail: { tokens: userData.data.tokens }
-      });
-      window.dispatchEvent(updateEvent);
-      return userData.data;
-    } catch (error) {
-      console.error('获取用户信息失败', error);
-      message.error(t('payment.fetchUserInfoFailed'));
-      return null;
-    }
-  };
+  // // 添加获取用户信息的方法
+  // const fetchUserInfo = async () => {
+  //   try {
+  //     const response = await fetch(getApiUrl('/user/info'), {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({ userId })
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error('获取用户信息失败');
+  //     }
+  //     const userData = await response.json();
+  //     localStorage.setItem('user', JSON.stringify(userData.data));
+  //     const updateEvent = new CustomEvent('updateUserInfo', {
+  //       detail: { tokens: userData.data.tokens }
+  //     });
+  //     window.dispatchEvent(updateEvent);
+  //     return userData.data;
+  //   } catch (error) {
+  //     console.error('获取用户信息失败', error);
+  //     message.error(t('payment.fetchUserInfoFailed'));
+  //     return null;
+  //   }
+  // };
   
 
   const renderPaymentForm = () => {
