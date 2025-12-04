@@ -33,10 +33,7 @@ const Payment = () => {
     price,
     period
   };
-  const creem = createCreem({
-    apiKey: 'creem_test_5AV549srVAESSDiNJ8Ne42',
-    testMode: true,
-  });
+  
 
   const handlePaymentMethodChange = (e) => {
     setPaymentMethod(e.target.value);
