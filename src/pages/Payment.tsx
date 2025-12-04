@@ -7,7 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useSearchParams } from 'react-router-dom';
 import { getApiUrl } from '@/config/api';
- 
+import { createCreem } from "creem_io";
+
+
 
 
 const Payment = () => {
@@ -31,7 +33,10 @@ const Payment = () => {
     price,
     period
   };
-  
+  const creem = createCreem({
+    apiKey: 'creem_test_5AV549srVAESSDiNJ8Ne42',
+    testMode: true,
+  });
 
   const handlePaymentMethodChange = (e) => {
     setPaymentMethod(e.target.value);
@@ -145,7 +150,8 @@ const Payment = () => {
         }
         if (data.code === 200) {
           setOrderId(data.data.orderId);
-  
+          // 在新窗口打开creem支付页面
+          window.open(data.data.checkout_url, '_blank');
           Modal.confirm({
             title: t('payment.confirmPayment'),
             content: t('payment.confirmPaymentTip'),
@@ -179,7 +185,7 @@ const Payment = () => {
             },
             onCancel: () => message.info(t('payment.waitingPayment'))
           });
-          window.open("https://www.creem.io/test/payment/prod_4CPAzKEcqM9U1U672WojQN", '_blank');
+         
         } else {
           message.error(data.error || t('payment.createOrderFailed'));
         }
