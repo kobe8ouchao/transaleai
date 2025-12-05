@@ -81,6 +81,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "description": "AI-powered document translation service with format preservation"
     }
     </script>
+    <!-- 1. Load the Featurebase SDK -->
+<script>!(function(e,t){var a="featurebase-sdk";function n(){if(!t.getElementById(a)){var e=t.createElement("script");(e.id=a),(e.src="https://do.featurebase.app/js/sdk.js"),t.getElementsByTagName("script")[0].parentNode.insertBefore(e,t.getElementsByTagName("script")[0])}};"function"!=typeof e.Featurebase&&(e.Featurebase=function(){(e.Featurebase.q=e.Featurebase.q||[]).push(arguments)}),"complete"===t.readyState||"interactive"===t.readyState?n():t.addEventListener("DOMContentLoaded",n)})(window,document);</script>
+
+<!-- 2. Boot Featurebase with your messenger config -->
+<script>
+  Featurebase("boot", {
+    appId: "69323f035f0870e9bd7ccf4d",         // required
+    email: "kobe824ouchao@gmail.com",         // optional, requires secure installation by default
+    userId: "abc12345",                   // optional, requires secure installation by default
+    createdAt: "2025-12-06T12:00:00Z", // optional
+    theme: "light",                    // "light" or "dark"
+    language: "en",                     // short code (e.g. "en", "de", etc.)
+    // Hide the launcher button entirely
+    // For custom launcher button implementation
+    // hideDefaultLauncher: true // optional
+  });
+</script>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
