@@ -156,7 +156,7 @@ const Payment = () => {
             cancelText: t('payment.notYet'),
             onOk: async () => {
               try {
-                const statusResponse = await fetch(getApiUrl(`/check-creem-status?orderId=${data.data.orderId}`));
+                const statusResponse = await fetch(getApiUrl(`/check-creem-status?orderId=${data.data.orderId}&checkId=${data.data.checkId}`));
                 const statusData = await statusResponse.json();
                 if (statusData.code === 200 && statusData.data.status === 'paid') {
                   message.success(t('payment.success'));
