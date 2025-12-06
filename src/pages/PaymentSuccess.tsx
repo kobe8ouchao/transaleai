@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Result, Button } from 'antd';
-import { CheckCircleOutlined } from '@ant-design/icons';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import HeaderComponent from '@/component/Header';
@@ -15,6 +14,7 @@ const PaymentSuccess = () => {
     const { t } = useLanguage();
     const [searchParams] = useSearchParams();
 
+    // 直接引导用户回到下单页面
     useEffect(() => {
         // 页面加载时刷新用户信息
         const refreshUserData = async () => {
@@ -71,24 +71,23 @@ const PaymentSuccess = () => {
             <HeaderComponent />
             <div className="flex items-center justify-center min-h-[80vh]">
                 <Result
-                    icon={<CheckCircleOutlined style={{ color: '#52c41a' }} />}
-                    status="success"
-                    title={t('payment.success')}
-                    subTitle={t('payment.thankYou')}
+                    status="info"
+                    title={t('payment.returnToOrder')}
+                    subTitle={t('payment.returnToOrderDesc')}
                     extra={[
+                        <Button
+                            key="payment"
+                            type="primary"
+                            style={{ backgroundColor: '#000000', borderColor: '#000000' }}
+                            onClick={() => navigate('/payment')}
+                        >
+                            {t('payment.backToOrder')}
+                        </Button>,
                         <Button
                             key="home"
                             onClick={() => navigate('/')}
                         >
                             {t('payment.goToHome')}
-                        </Button>,
-                        <Button
-                            key="account"
-                            type="primary"
-                            style={{ backgroundColor: '#000000', borderColor: '#000000' }}
-                            onClick={() => navigate('/see')}
-                        >
-                            {t('payment.goToAccount')}
                         </Button>,
                     ]}
                 />

@@ -246,5 +246,19 @@ export default {
     securePayment: "すべての支払い情報はSSL暗号化で送信され、お支払いの安全を確保します",
     fetchUserInfoFailed: "ユーザー情報の取得に失敗しました。ページを更新して再試行してください",
     recharge: "チャージ",
+    alipayTitle: "アリペイ決済",
+    qrCodeExpire: "QRコードの有効期限は30分です",
+    waitingForPayment: "支払い待ち中...",
+    paymentTimeout: "支払いタイムアウト、ページを更新してください",
+    orderId: "注文ID",
+    startUsing: "使用を開始",
+    vipRestriction: "VIPユーザーは基本プランを購入できません",
+    alreadySubscribed: "既にVIP会員です",
+    vipExpires: "VIP有効期限",
+    unlimited: "無制限",
+    goToHome: "ホームに戻る",
+    returnToOrder: "注文ページに戻って購入を完了してください",
+    returnToOrderDesc: "下のボタンをクリックして注文ページに戻り、購入ボタンをクリックして支払いプロセスを完了してください",
+    backToOrder: "注文ページに戻る"
   }
 }

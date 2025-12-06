@@ -306,5 +306,19 @@ export default {
     securePayment: "Alle Zahlungsinformationen werden über SSL-Verschlüsselung übertragen, um die Sicherheit Ihrer Zahlung zu gewährleisten",
     fetchUserInfoFailed: "Fehler beim Abrufen der Benutzerinformationen, bitte aktualisieren Sie die Seite und versuchen Sie es erneut",
     recharge: "Aufladen",
+    alipayTitle: "Alipay-Zahlung",
+    qrCodeExpire: "QR-Code läuft in 30 Minuten ab",
+    waitingForPayment: "Warten auf Zahlung...",
+    paymentTimeout: "Zahlungszeitüberschreitung, bitte aktualisieren Sie die Seite",
+    orderId: "Bestellnummer",
+    startUsing: "Jetzt verwenden",
+    vipRestriction: "VIP-Benutzer können den Basisplan nicht kaufen",
+    alreadySubscribed: "Sie sind bereits VIP-Mitglied",
+    vipExpires: "VIP läuft ab",
+    unlimited: "Unbegrenzt",
+    goToHome: "Zur Startseite",
+    returnToOrder: "Bitte kehren Sie zur Bestellseite zurück, um den Kauf abzuschließen",
+    returnToOrderDesc: "Bitte klicken Sie auf die Schaltfläche unten, um zur Bestellseite zurückzukehren, und klicken Sie dann auf die Kaufschaltfläche, um den Zahlungsvorgang abzuschließen",
+    backToOrder: "Zurück zur Bestellseite"
   }
 } 

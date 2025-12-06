@@ -33,7 +33,7 @@ const Payment = () => {
     price,
     period
   };
-  
+
 
   const handlePaymentMethodChange = (e) => {
     setPaymentMethod(e.target.value);
@@ -89,9 +89,15 @@ const Payment = () => {
                 if (statusData.code === 200 && statusData.data.status === 'paid') {
                   message.success(t('payment.success'));
                   // 刷新用户信息
-                  const userResponse = await fetch(getApiUrl(`/user/${userId}`));
-                  const userData = await userResponse.json();
-                  if (userData.code === 200) {
+                  const response = await fetch(getApiUrl('/user/info'), {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ userId })
+                  });
+                  if (response.ok) {
+                    const userData = await response.json();
                     localStorage.setItem('user', JSON.stringify(userData.data));
                     // 触发用户信息更新事件，包含credits和VIP状态
                     window.dispatchEvent(new CustomEvent('updateUserInfo', {
@@ -146,6 +152,7 @@ const Payment = () => {
           return;
         }
         if (data.code === 200) {
+          console.log(data);
           setOrderId(data.data.orderId);
           // 在新窗口打开creem支付页面
           window.open(data.data.checkout_url, '_blank');
@@ -156,14 +163,21 @@ const Payment = () => {
             cancelText: t('payment.notYet'),
             onOk: async () => {
               try {
-                const statusResponse = await fetch(getApiUrl(`/check-creem-status?orderId=${data.data.orderId}&checkId=${data.data.checkId}`));
+                const statusResponse = await fetch(getApiUrl(`/check-creem-status?orderId=${data.data.orderId}&checkId=${data.data.check_id}`));
                 const statusData = await statusResponse.json();
                 if (statusData.code === 200 && statusData.data.status === 'paid') {
                   message.success(t('payment.success'));
-                  const userResponse = await fetch(getApiUrl(`/user/${userId}`));
-                  const userData = await userResponse.json();
-                  if (userData.code === 200) {
+                  const response = await fetch(getApiUrl('/user/info'), {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ userId })
+                  });
+                  if (response.ok) {
+                    const userData = await response.json();
                     localStorage.setItem('user', JSON.stringify(userData.data));
+                    // 触发用户信息更新事件，包含credits和VIP状态
                     window.dispatchEvent(new CustomEvent('updateUserInfo', {
                       detail: {
                         tokens: userData.data.tokens,
@@ -182,7 +196,7 @@ const Payment = () => {
             },
             onCancel: () => message.info(t('payment.waitingPayment'))
           });
-         
+
         } else {
           message.error(data.error || t('payment.createOrderFailed'));
         }
@@ -231,7 +245,7 @@ const Payment = () => {
   //     return null;
   //   }
   // };
-  
+
 
   const renderPaymentForm = () => {
     switch (paymentMethod) {
@@ -250,7 +264,7 @@ const Payment = () => {
       case 'stripe':
         return (
           <div className="bg-gray-50 p-6 rounded-lg">
-           
+
           </div>
         );
       case 'wechat':

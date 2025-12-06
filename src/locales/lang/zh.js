@@ -313,6 +313,9 @@ export default {
     alreadySubscribed: "您已是VIP会员",
     vipExpires: "VIP到期时间",
     unlimited: "无限制",
-    goToHome: "返回首页"
+    goToHome: "返回首页",
+    returnToOrder: "请返回下单页面完成购买",
+    returnToOrderDesc: "请点击下方按钮返回下单页面，然后点击购买按钮完成支付流程",
+    backToOrder: "返回下单页面"
   }
 }

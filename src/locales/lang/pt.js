@@ -302,5 +302,19 @@ export default {
     securePayment: "Todas as informações de pagamento são transmitidas via criptografia SSL, garantindo a segurança do seu pagamento",
     fetchUserInfoFailed: "Falha ao recuperar informações do usuário, por favor atualize a página e tente novamente",
     recharge: "Recarregar",
+    alipayTitle: "Pagamento Alipay",
+    qrCodeExpire: "O código QR expira em 30 minutos",
+    waitingForPayment: "Aguardando pagamento...",
+    paymentTimeout: "Tempo de pagamento esgotado, por favor atualize a página",
+    orderId: "ID do pedido",
+    startUsing: "Começar a usar",
+    vipRestriction: "Usuários VIP não podem comprar o plano básico",
+    alreadySubscribed: "Você já é membro VIP",
+    vipExpires: "VIP expira",
+    unlimited: "Ilimitado",
+    goToHome: "Voltar ao início",
+    returnToOrder: "Por favor, retorne à página de pedido para concluir a compra",
+    returnToOrderDesc: "Por favor, clique no botão abaixo para retornar à página de pedido, depois clique no botão de compra para concluir o processo de pagamento",
+    backToOrder: "Voltar à página de pedido"
   }
 }

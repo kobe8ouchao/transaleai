@@ -295,6 +295,9 @@ export default {
     alreadySubscribed: "You are already a VIP member",
     vipExpires: "VIP Expires",
     unlimited: "Unlimited",
-    goToHome: "Go to Home"
+    goToHome: "Go to Home",
+    returnToOrder: "Please Return to Order Page to Complete Purchase",
+    returnToOrderDesc: "Please click the button below to return to the order page, then click the purchase button to complete the payment process",
+    backToOrder: "Back to Order Page"
   }
 }
