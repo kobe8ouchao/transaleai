@@ -22,6 +22,12 @@ import WordTranslation from '../pages/WordTranslation';
 import LegalTranslation from '../pages/LegalTranslation';
 import AcademicTranslation from '../pages/AcademicTranslation';
 import BusinessTranslation from '../pages/BusinessTranslation';
+import PDFTranslation from '../pages/PDFTranslation';
+import PDFOCRTranslation from '../pages/PDFOCRTranslation';
+import PDFLegalTranslation from '../pages/PDFLegalTranslation';
+import SpanishTranslation from '../pages/SpanishTranslation';
+import SpanishBusinessTranslation from '../pages/SpanishBusinessTranslation';
+import SpanishPDFTranslation from '../pages/SpanishPDFTranslation';
 
 export default function Router() {
   return useRoutes([
@@ -80,6 +86,30 @@ export default function Router() {
     {
       path: '/solutions/business-translation',
       element: <BusinessTranslation />,
+    }
+    ,{
+      path: '/translate/pdf-document',
+      element: <PDFTranslation />,
+    }
+    ,{
+      path: '/features/pdf-ocr',
+      element: <PDFOCRTranslation />,
+    }
+    ,{
+      path: '/solutions/pdf-legal-translation',
+      element: <PDFLegalTranslation />,
+    }
+    ,{
+      path: '/translate/spanish-language',
+      element: <SpanishTranslation />,
+    }
+    ,{
+      path: '/solutions/spanish-business-translation',
+      element: <SpanishBusinessTranslation />,
+    }
+    ,{
+      path: '/translate/pdf-spanish',
+      element: <SpanishPDFTranslation />,
     }
   ])
 }
